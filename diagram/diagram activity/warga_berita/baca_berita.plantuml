@@ -1,0 +1,50 @@
+@startuml
+title Activity Diagram - Warga Membaca Berita & Komentar
+
+|Warga|
+start
+:Membuka Situs Web Desa;
+
+|Sistem|
+:Menampilkan Halaman Beranda
+dengan Berita Terbaru;
+
+|Warga|
+:Memilih Menu Berita;
+
+|Sistem|
+:Menampilkan Halaman Daftar Berita;
+
+|Warga|
+:Menekan Judul Berita yang Dipilih;
+
+|Sistem|
+:Menampilkan Halaman Detail Berita
+(judul, gambar, isi berita, tanggal,
+kategori, dan kolom komentar);
+
+|Warga|
+:Membaca Isi Berita;
+
+if (Ingin Berkomentar?) then (Ya)
+    |Warga|
+    :Mengisi Form Komentar
+    (nama, email, isi komentar);
+    :Menekan Tombol Kirim Komentar;
+
+    |Sistem|
+    if (Validasi Data?) then (Valid)
+        :Menyimpan Komentar ke Database;
+        :Menampilkan Notifikasi
+        Komentar Berhasil Dikirim;
+    else (Tidak Valid)
+        :Menampilkan Pesan Error;
+    endif
+else (Tidak)
+endif
+
+|Warga|
+:Selesai Membaca Berita;
+
+stop
+@enduml

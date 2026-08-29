@@ -1,0 +1,76 @@
+@startuml
+' --- PENGATURAN VISUAL AGAR MIRIP GAMBAR ANDA ---
+skinparam activity {
+    BackgroundColor white
+    BorderColor black
+    FontColor black
+}
+skinparam swimlane {
+    BorderColor black
+    BorderThickness 2
+    TitleFontColor black
+}
+skinparam condition {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam ArrowColor black
+skinparam defaultTextAlignment center
+
+' --- MENDUPLIKASI GARIS SWIMLANE (KOLOM VERTICAL) ---
+|Warga|
+|Sistem|
+|Admin Desa|
+
+' --- MULAI ALUR ---
+|Warga|
+start
+:Membuka Menu\nPengajuan Surat;
+
+|Sistem|
+:Menampilkan Form\nPengajuan Surat;
+
+' Proses Controller memvalidasi request
+repeat
+    |Warga|
+    :Mengisi Form Isian & Mengunggah\nBerkas KTP/KK (File JPG/PDF);
+    :Menekan Tombol "Kirim Pengajuan";
+
+    |Sistem|
+    if (Validasi Data Lengkap?) then (Ya)
+        break
+    else (Tidak)
+        :Tampilkan Peringatan Error\n(Validasi Gagal);
+        |Warga|
+        :Perbaiki Kolom Inputan yang Salah;
+    endif
+repeat while (Isi Ulang Form)
+
+|Sistem|
+    |Sistem|
+    :Menyimpan Data ke Database\nTabel (pengajuan_surats);
+    :Mengatur Status Default:\n"Menunggu";
+    
+    |Admin Desa|
+    :Melihat Notifikasi/Daftar\nPengajuan Surat Baru;
+    :Memeriksa Kesesuaian\nData & Lampiran Warga;
+    ' Keputusan Admin (ACC/Tolak)
+    if (Keputusan Verifikasi?) then (Data Tidak Sesuai)
+        :Membatalkan Pengajuan\n(Ubah Status Ditolak);
+    else (Data Valid & Sesuai)
+        :Menyiapkan/Mencetak Surat Fisik;
+        :Ubah Status Menjadi:\n"Disetujui / Selesai";
+    endif
+    
+    |Sistem|
+    :Menyimpan Perubahan\nStatus di Database;
+    
+    |Warga|
+    :Mengecek Menu Riwayat / Tracking;
+    
+    |Sistem|
+    :Tampilkan Status Akhir\nPengajuan Surat;
+    
+    stop
+
+@enduml

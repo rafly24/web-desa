@@ -37,16 +37,9 @@ class LaporanWargaController extends Controller
         $validated = $request->validate([
             'kategori_laporan_id' => 'required|exists:kategori_laporan,id',
             'nama_pelapor' => 'required|string|max:255',
-            'email' => 'nullable|email',
             'no_telepon' => 'required|string|max:15',
-            'alamat' => 'required|string',
-            'judul_laporan' => 'required|string|max:255',
             'isi_laporan' => 'required|string',
-            'lokasi_kejadian' => 'required|string',
-            'tanggal_kejadian' => 'required|date',
             'foto_bukti.*' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
-            'prioritas' => 'required|in:rendah,sedang,tinggi',
-            'is_anonim' => 'nullable|boolean',
         ]);
 
         // Upload multiple photos
@@ -57,12 +50,14 @@ class LaporanWargaController extends Controller
             }
         }
         $validated['foto_bukti'] = $fotoBukti;
-        $validated['is_anonim'] = $request->has('is_anonim') ? true : false;
+
+        // Status default
+        $validated['status'] = 'baru';
 
         $laporan = LaporanWarga::create($validated);
 
-        Alert::success('Berhasil!', 'Laporan Anda berhasil dikirim. Nomor laporan: ' . $laporan->nomor_laporan);
-        return redirect()->route('laporan-warga.detail', $laporan->id);
+        Alert::success('Berhasil!', 'Laporan Anda berhasil dikirim dan akan segera dilihat oleh Admin. Nomor Laporan: ' . $laporan->nomor_laporan);
+        return redirect()->route('laporan-warga.index');
     }
 
     public function detail($id)
@@ -73,25 +68,5 @@ class LaporanWargaController extends Controller
         $laporan->increment('views');
 
         return view('laporan-warga.detail', compact('laporan'));
-    }
-
-    public function tracking(Request $request, $nomor = null)
-    {
-        $laporan = null;
-
-        if ($nomor) {
-            $laporan = LaporanWarga::with('kategoriLaporan')->where('nomor_laporan', $nomor)->first();
-        }
-
-        return view('laporan-warga.tracking', compact('laporan'));
-    }
-
-    public function cekStatus(Request $request)
-    {
-        $request->validate([
-            'nomor_laporan' => 'required|string',
-        ]);
-
-        return redirect()->route('laporan-warga.tracking', $request->nomor_laporan);
     }
 }

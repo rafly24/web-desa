@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-6 mt-5">
                     <a href="/" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                        <img src="admin/assets/images/auth/logo.png" width="220" alt="Logo">
+                        <img src="{{ asset('assets/img/logo-malang.png') }}" width="150" alt="Logo">
                     </a>
                 </div>
                 <div class="col-md-6">
@@ -26,19 +26,19 @@
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="name" name="name" aria-describedby="textHelp">
+                            <input type="text" class="form-control" id="name" name="name" aria-describedby="textHelp" aria-label="Nama Lengkap">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" aria-label="Alamat Email">
                         </div>
                         <div class="mb-4">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password">
+                            <input type="password" class="form-control" id="password" name="password" aria-label="Password">
                         </div>
                         <div class="mb-4">
                             <label for="password" class="form-label">Konfirmasi Password</label>
-                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" aria-label="Konfirmasi Password">
                         </div>
                         <div class="mb-3">
                             <label for="role_id" class="form-label">Daftar Sebagai</label>

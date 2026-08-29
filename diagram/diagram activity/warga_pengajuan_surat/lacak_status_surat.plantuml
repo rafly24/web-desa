@@ -1,0 +1,42 @@
+@startuml
+title Activity Diagram - Warga Melacak Status Pengajuan Surat
+
+|Warga|
+start
+:Membuka Situs Web Desa;
+
+|Sistem|
+:Menampilkan Halaman Beranda;
+
+|Warga|
+:Memilih Menu Pengajuan Surat;
+
+|Sistem|
+:Menampilkan Halaman Pengajuan Surat;
+
+|Warga|
+:Memasukkan Nomor Pengajuan;
+:Menekan Tombol Cek Status;
+
+|Sistem|
+if (Nomor Pengajuan Ditemukan?) then (Ditemukan)
+    :Menampilkan Detail Status Pengajuan
+    (jenis surat, tanggal pengajuan,
+    status: pending/diproses/selesai/ditolak);
+    if (Status = Selesai?) then (Ya)
+        :Menampilkan Tombol Download Surat PDF;
+        |Warga|
+        :Mengunduh Surat dalam Format PDF;
+    else (Belum Selesai)
+        |Warga|
+        :Mengetahui Status Terkini Pengajuan;
+    endif
+else (Tidak Ditemukan)
+    :Menampilkan Pesan
+    Nomor Pengajuan Tidak Ditemukan;
+    |Warga|
+    :Memeriksa Kembali Nomor Pengajuan;
+endif
+
+stop
+@enduml

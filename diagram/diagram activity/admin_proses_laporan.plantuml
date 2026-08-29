@@ -1,0 +1,38 @@
+@startuml
+skinparam style strictuml
+skinparam activity {
+  BackgroundColor #F9F9F9
+  BorderColor #333333
+  DiamondBackgroundColor #E8F8F5
+}
+
+|Admin|
+start
+:Memilih Menu Laporan Warga;
+|Sistem|
+:Menampilkan Daftar Laporan Masuk;
+|Admin|
+:Melihat Detail Laporan\n(Foto Bukti, Titik Lokasi Peta, Deskripsi);
+:Memverifikasi Kebenaran Laporan;
+if (Laporan Valid/Layak Tindak Lanjut?) then (Ya)
+  :Klik Tombol 'Proses';
+  |Sistem|
+  :Mengubah Status Laporan Menjadi "Diproses";
+  |Admin|
+  :Mengoordinasikan Tindak Lanjut Lapangan\n(Berdasarkan Titik Peta);
+  :Setelah Penanganan Selesai, Kembali ke Sistem;
+  :Klik Tombol 'Selesai';
+  |Sistem|
+  :Mengubah Status Menjadi "Selesai";
+  :Mencatat Tanggal Selesai & Menyimpan Relasi ID Admin;
+else (Tidak)
+  |Admin|
+  :Klik Tombol 'Tolak';
+  |Sistem|
+  :Mengubah Status Menjadi "Ditolak";
+endif
+
+|Sistem|
+:Memperbarui Tampilan Daftar Laporan;
+stop
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+skinparam style strictuml
+skinparam activity {
+  BackgroundColor #F9F9F9
+  BorderColor #333333
+  DiamondBackgroundColor #E8F8F5
+}
+
+|Admin|
+start
+:Memilih Menu Data Master\n(Slider/Kategori/Wilayah/dll);
+|Sistem|
+:Menampilkan Halaman Tabel Data;
+|Admin|
+:Mencari Data yang Ingin Dihapus;
+:Klik Tombol 'Hapus' pada Baris Data Tersebut;
+|Sistem|
+:Menampilkan Pop-up/Modal Konfirmasi Hapus;
+|Admin|
+if (Konfirmasi?) then (Ya, Hapus)
+  |Sistem|
+  :Menghapus Data dari Database secara Permanen;
+  :Menampilkan Alert Sukses Hapus Data;
+  :Memperbarui Tampilan Tabel Data;
+else (Batal)
+  |Admin|
+  :Menutup Pop-up Konfirmasi;
+endif
+stop
+@enduml

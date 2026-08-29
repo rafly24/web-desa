@@ -6,7 +6,7 @@
             <div class="card-body p-5">
                 <div class="text-center mb-4">
                     <a href="/" class="d-block">
-                        <img src="admin/assets/images/auth/logo.png" width="180" alt="Logo">
+                        <img src="{{ asset('assets/img/logo-malang.png') }}" alt="Logo" style="max-height: 80px; max-width: 180px; width: auto; object-fit: contain;">
                     </a>
                 </div>
                 
@@ -33,12 +33,12 @@
                     <div class="mb-3">
                         <label for="email" class="form-label fw-bold">Email</label>
                         <input type="email" id="email" class="form-control" name="email" value="{{ old('email') }}"
-                            required autocomplete="email" autofocus>
+                            aria-label="Alamat Email" required autocomplete="email" autofocus>
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label fw-bold">Password</label>
-                        <input type="password" id="password" class="form-control" name="password" required>
+                        <input type="password" id="password" class="form-control" name="password" aria-label="Password" required>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-3">

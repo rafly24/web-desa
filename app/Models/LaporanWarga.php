@@ -15,33 +15,22 @@ class LaporanWarga extends Model
         'nomor_laporan',
         'kategori_laporan_id',
         'nama_pelapor',
-        'email',
         'no_telepon',
-        'alamat',
-        'judul_laporan',
         'isi_laporan',
-        'lokasi_kejadian',
         'latitude',
         'longitude',
-        'tanggal_kejadian',
         'foto_bukti',
-        'prioritas',
         'status',
-        'tanggapan_admin',
-        'foto_tindak_lanjut',
         'tanggal_ditanggapi',
         'tanggal_selesai',
         'ditangani_oleh',
-        'views',
-        'is_anonim'
+        'views'
     ];
 
     protected $casts = [
-        'tanggal_kejadian' => 'date',
         'tanggal_ditanggapi' => 'datetime',
         'tanggal_selesai' => 'datetime',
         'foto_bukti' => 'array',
-        'is_anonim' => 'boolean',
     ];
 
     public function kategoriLaporan()
@@ -65,17 +54,6 @@ class LaporanWarga extends Model
         ];
 
         return $badges[$this->status] ?? '<span class="badge bg-secondary">Unknown</span>';
-    }
-
-    public function getPrioritasBadgeAttribute()
-    {
-        $badges = [
-            'rendah' => '<span class="badge bg-secondary">Rendah</span>',
-            'sedang' => '<span class="badge bg-warning">Sedang</span>',
-            'tinggi' => '<span class="badge bg-danger">Tinggi</span>',
-        ];
-
-        return $badges[$this->prioritas] ?? '<span class="badge bg-secondary">Unknown</span>';
     }
 
     protected static function boot()

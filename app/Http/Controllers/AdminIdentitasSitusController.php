@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Situs;
+use App\Helpers\StorageSync;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -34,14 +35,9 @@ class AdminIdentitasSitusController extends Controller
         ]);
 
         if($request->hasFile('logo')){
-            if($situs->logo){
-                unlink('.' .Storage::url($situs->logo));
-            }
             $path       = 'img-logo/';
             $file       = $request->file('logo');
-            $extension  = $file->getClientOriginalExtension(); 
-            $fileName   = uniqid() . '.' . $extension; 
-            $logo       = $file->storeAs($path, $fileName, 'public');
+            $logo       = StorageSync::updateAndSync($file, $situs->logo, $path);
         } else {
             $validator = Validator::make($request->all(), [
                 'nm_desa'       => 'required',

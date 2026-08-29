@@ -1,0 +1,76 @@
+@startuml
+' --- PENGATURAN VISUAL ---
+skinparam activity {
+    BackgroundColor white
+    BorderColor black
+    FontColor black
+}
+skinparam swimlane {
+    BorderColor black
+    BorderThickness 2
+    TitleFontColor black
+}
+skinparam condition {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam ArrowColor black
+skinparam defaultTextAlignment center
+
+' --- MENDUPLIKASI GARIS SWIMLANE (KOLOM VERTICAL) ---
+|Warga|
+|Sistem|
+|Admin Desa|
+
+' --- MULAI ALUR ---
+|Warga|
+start
+:Membuka Menu\nLaporan Warga;
+
+|Sistem|
+:Menampilkan Form\nLaporan Warga;
+
+' Proses Controller memvalidasi request
+repeat
+    |Warga|
+    :Mengisi Judul, Kategori, Deskripsi\n& Unggah Foto Bukti;
+    :Menekan Tombol "Kirim Laporan";
+
+    |Sistem|
+    if (Validasi Data Lengkap?) then (Ya)
+        break
+    else (Tidak)
+        :Tampilkan Peringatan Error\n(Validasi Gagal);
+        |Warga|
+        :Lengkapi Kolom Input\nyang Kosong/Salah;
+    endif
+repeat while (Isi Ulang Form)
+
+|Sistem|
+:Menyimpan Data ke Database\nTabel (laporan_wargas);
+:Mengatur Status Awal:\n"Menunggu";
+
+|Admin Desa|
+:Melihat Daftar\nLaporan Masuk Baru;
+:Membaca Deskripsi Aduan\n& Terjun Cek Lokasi / Bukti;
+
+' Keputusan Admin terhadap laporan
+if (Status Tindak Lanjut?) then (Layak Diproses)
+    :Mengambil Tindakan Penyelesaian;
+    :Ubah Status Laporan Ke:\n"Diproses" lalu "Selesai";
+else (Aduan Palsu/Ditolak)
+    :Abaikan Laporan;
+    :Ubah Status Laporan Ke:\n"Ditolak";
+endif
+
+|Sistem|
+:Menyimpan Perubahan\nStatus di Database;
+
+|Warga|
+:Mengecek Riwayat Status\nLaporan Pribadi;
+
+|Sistem|
+:Tampilkan Info Tindak Lanjut\n& Status Terkini Laporan;
+
+stop
+@enduml

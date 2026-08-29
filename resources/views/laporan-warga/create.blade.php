@@ -35,7 +35,7 @@
               </ul>
             </div>
 
-            <form action="{{ route('laporan-warga.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="formLaporan" action="{{ route('laporan-warga.store') }}" method="POST" enctype="multipart/form-data">
               @csrf
 
               <h6 class="border-bottom pb-2 mb-3">Data Pelapor</h6>
@@ -51,48 +51,20 @@
                 </div>
 
                 <div class="col-md-6 mb-3">
-                  <label class="form-label">Email</label>
-                  <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" 
-                         value="{{ old('email') }}">
-                  @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">No. Telepon/HP <span class="text-danger">*</span></label>
+                  <label class="form-label">No. Telepon/WA <span class="text-danger">*</span></label>
                   <input type="text" name="no_telepon" class="form-control @error('no_telepon') is-invalid @enderror" 
                          value="{{ old('no_telepon') }}" required>
                   @error('no_telepon')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
-
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Alamat <span class="text-danger">*</span></label>
-                  <input type="text" name="alamat" class="form-control @error('alamat') is-invalid @enderror" 
-                         value="{{ old('alamat') }}" required>
-                  @error('alamat')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-
-                <div class="col-md-12 mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="is_anonim" id="is_anonim" 
-                           value="1" {{ old('is_anonim') ? 'checked' : '' }}>
-                    <label class="form-check-label" for="is_anonim">
-                      Laporan Anonim (Nama tidak akan ditampilkan ke publik)
-                    </label>
-                  </div>
-                </div>
               </div>
 
-              <h6 class="border-bottom pb-2 mb-3 mt-4">Detail Laporan</h6>
+              <h6 class="border-bottom pb-2 mb-3 mt-4">Detail Pengaduan</h6>
 
               <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Kategori Laporan <span class="text-danger">*</span></label>
+                <div class="col-md-12 mb-3">
+                  <label class="form-label">Kategori Pengaduan <span class="text-danger">*</span></label>
                   <select name="kategori_laporan_id" class="form-select @error('kategori_laporan_id') is-invalid @enderror" required>
                     <option value="">Pilih Kategori</option>
                     @foreach($kategori as $kat)
@@ -106,29 +78,8 @@
                   @enderror
                 </div>
 
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Prioritas <span class="text-danger">*</span></label>
-                  <select name="prioritas" class="form-select @error('prioritas') is-invalid @enderror" required>
-                    <option value="rendah" {{ old('prioritas') == 'rendah' ? 'selected' : '' }}>Rendah</option>
-                    <option value="sedang" {{ old('prioritas', 'sedang') == 'sedang' ? 'selected' : '' }}>Sedang</option>
-                    <option value="tinggi" {{ old('prioritas') == 'tinggi' ? 'selected' : '' }}>Tinggi</option>
-                  </select>
-                  @error('prioritas')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-
                 <div class="col-md-12 mb-3">
-                  <label class="form-label">Judul Laporan <span class="text-danger">*</span></label>
-                  <input type="text" name="judul_laporan" class="form-control @error('judul_laporan') is-invalid @enderror" 
-                         value="{{ old('judul_laporan') }}" placeholder="Ringkasan singkat laporan Anda" required>
-                  @error('judul_laporan')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-
-                <div class="col-md-12 mb-3">
-                  <label class="form-label">Isi Laporan <span class="text-danger">*</span></label>
+                  <label class="form-label">Isi Pengaduan <span class="text-danger">*</span></label>
                   <textarea name="isi_laporan" rows="5" class="form-control @error('isi_laporan') is-invalid @enderror" 
                             placeholder="Jelaskan detail permasalahan atau keluhan Anda" required>{{ old('isi_laporan') }}</textarea>
                   @error('isi_laporan')
@@ -136,26 +87,8 @@
                   @enderror
                 </div>
 
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Lokasi Kejadian <span class="text-danger">*</span></label>
-                  <input type="text" name="lokasi_kejadian" class="form-control @error('lokasi_kejadian') is-invalid @enderror" 
-                         value="{{ old('lokasi_kejadian') }}" placeholder="Alamat lengkap lokasi" required>
-                  @error('lokasi_kejadian')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Tanggal Kejadian <span class="text-danger">*</span></label>
-                  <input type="date" name="tanggal_kejadian" class="form-control @error('tanggal_kejadian') is-invalid @enderror" 
-                         value="{{ old('tanggal_kejadian', date('Y-m-d')) }}" max="{{ date('Y-m-d') }}" required>
-                  @error('tanggal_kejadian')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-
                 <div class="col-md-12 mb-3">
-                  <label class="form-label">Foto Bukti</label>
+                  <label class="form-label">Lampiran (Foto Bukti)</label>
                   <input type="file" name="foto_bukti[]" class="form-control @error('foto_bukti.*') is-invalid @enderror" 
                          accept="image/*" multiple>
                   <small class="text-muted">Bisa upload lebih dari 1 foto. Max 2MB per foto (JPG, PNG)</small>
@@ -183,4 +116,13 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      if(typeof initAutosave === 'function') {
+          initAutosave('formLaporan', 'draft_laporan');
+          handleFormSubmitOffline('formLaporan', 'draft_laporan', "{{ route('laporan-warga.store') }}", "{{ route('laporan-warga.index') }}", 'sync-laporan');
+      }
+  });
+</script>
 @endsection

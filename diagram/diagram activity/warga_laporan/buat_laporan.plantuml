@@ -1,0 +1,54 @@
+@startuml
+title Activity Diagram - Warga Membuat Laporan
+
+|Warga|
+start
+:Membuka Situs Web Desa;
+
+|Sistem|
+:Menampilkan Halaman Beranda;
+
+|Warga|
+:Memilih Menu Laporan Warga;
+
+|Sistem|
+:Menampilkan Halaman Laporan Warga;
+
+|Warga|
+:Menekan Tombol Buat Laporan;
+
+|Sistem|
+:Menampilkan Form Laporan
+(nama pelapor, nomor HP, kategori,
+deskripsi, upload foto bukti);
+
+|Warga|
+:Mengisi Data Pelapor
+(dapat memilih anonim);
+:Memilih Kategori Laporan;
+:Mengisi Deskripsi Laporan;
+:Mengunggah Foto Bukti (multi-foto);
+:Menekan Tombol Kirim Laporan;
+
+|Sistem|
+if (Validasi Data?) then (Valid)
+    :Menyimpan Foto Bukti ke Storage;
+    :Menyimpan Data Laporan ke Database;
+    :Men-generate Nomor Laporan Otomatis;
+    :Menampilkan Notifikasi Sukses
+    beserta Nomor Laporan;
+else (Tidak Valid)
+    :Menampilkan Pesan Error;
+    |Warga|
+    :Memperbaiki Isian Form;
+    :Menekan Tombol Kirim Laporan;
+    |Sistem|
+    :Menyimpan Data Laporan ke Database;
+    :Menampilkan Notifikasi Sukses;
+endif
+
+|Warga|
+:Mencatat Nomor Laporan untuk Pelacakan;
+
+stop
+@enduml

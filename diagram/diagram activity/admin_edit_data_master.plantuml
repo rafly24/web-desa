@@ -1,0 +1,37 @@
+@startuml
+skinparam style strictuml
+skinparam activity {
+  BackgroundColor #F9F9F9
+  BorderColor #333333
+  DiamondBackgroundColor #E8F8F5
+}
+
+|Admin|
+start
+:Memilih Menu Data Master\n(Slider/Kategori/Wilayah/dll);
+|Sistem|
+:Menampilkan Halaman Tabel Data;
+|Admin|
+:Mencari Data yang Ingin Diubah;
+:Klik Tombol 'Edit' pada Baris Data Tersebut;
+|Sistem|
+:Mengambil Data Lama dari Database;
+:Menampilkan Form dengan Data Terisi;
+|Admin|
+:Melakukan Perubahan pada Input Form;
+:Klik Tombol 'Update';
+|Sistem|
+:Melakukan Validasi Perubahan;
+if (Data Valid?) then (Ya)
+  :Menyimpan Perubahan ke Database;
+  :Menampilkan Alert Sukses Update Data;
+else (Tidak)
+  :Menampilkan Pesan Error Validasi;
+  |Admin|
+  :Memperbaiki Input Form;
+  detach
+endif
+|Sistem|
+:Memperbarui Tampilan Tabel Data;
+stop
+@enduml

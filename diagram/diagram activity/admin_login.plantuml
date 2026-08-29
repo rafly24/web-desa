@@ -1,0 +1,52 @@
+@startuml
+title Activity Diagram - Admin Login
+
+skinparam activity {
+    BackgroundColor white
+    BorderColor black
+    FontColor black
+}
+skinparam swimlane {
+    BorderColor black
+    BorderThickness 1
+    TitleFontColor black
+}
+skinparam condition {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam ArrowColor black
+skinparam defaultTextAlignment center
+
+|Admin Desa|
+|Sistem|
+
+|Admin Desa|
+start
+:Mengakses URL Halaman Login;
+
+|Sistem|
+:Menampilkan Form Login;
+
+|Admin Desa|
+:Memasukkan Email dan Password;
+:Menekan Tombol Login;
+
+|Sistem|
+if (Kredensial Valid?) then (Ya)
+    :Membuat Sesi Admin;
+    :Mengarahkan ke Halaman Dashboard;
+    |Admin Desa|
+    :Berhasil Masuk ke Dashboard;
+else (Tidak)
+    |Sistem|
+    :Menampilkan Pesan Error (Kredensial Salah);
+    |Admin Desa|
+    :Mengisi Ulang Email & Password;
+    |Sistem|
+    :Membuat Sesi Admin;
+    :Mengarahkan ke Dashboard;
+endif
+
+stop
+@enduml

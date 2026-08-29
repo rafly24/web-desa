@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="row p-4">
                         <div class="col-lg-4">
-                            <img src="{{ asset('storage/' . $umkm->foto) }}" alt="Gambar produk" class="img-fluid">
+                            <img src="{{ asset('storage/' . $umkm->foto) }}" alt="Gambar produk" class="img-fluid" loading="lazy">
                         </div>
                         <div class="col-lg-8">
                             <div class="card-body">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Umkm;
+use App\Helpers\StorageSync;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -55,24 +56,22 @@ class AdminUmkmController extends Controller
             'deskripsi.required'    => 'Wajib menambahkan deskripsi produk !'
         ]);
 
-        if ($request->hasFile('foto')) {
-            $path       = 'img-produk/';
-            $file       = $request->file('foto');
-            $extension  = $file->getClientOriginalExtension();
-            $fileName   = uniqid() . '.' . $extension;
-            $foto     = $file->storeAs($path, $fileName, 'public');
-        } else {
-            $foto     = null;
-        }
-
         if ($validator->fails()) {
             return redirect('/admin/umkm/create')
                 ->withErrors($validator)
                 ->withInput();
         }
 
+        if ($request->hasFile('foto')) {
+            $path       = 'img-produk';
+            $file       = $request->file('foto');
+            $foto       = StorageSync::storeAndSync($file, $path);
+        } else {
+            $foto       = null;
+        }
+
         Umkm::create([
-            'foto'          =>  $path . $fileName,
+            'foto'          =>  $foto,
             'produk'        =>  $request->produk,
             'slug'          =>  $request->slug,
             'harga'         =>  $request->harga,
@@ -122,31 +121,11 @@ class AdminUmkmController extends Controller
         }
 
         if ($request->hasFile('foto')) {
-            if ($umkm->foto) {
-                unlink('.' . Storage::url($umkm->foto));
-            }
             $path       = 'img-produk/';
             $file       = $request->file('foto');
-            $extension  = $file->getClientOriginalExtension();
-            $fileName   = uniqid() . '.' . $extension;
-            $foto     = $file->storeAs($path, $fileName, 'public');
+            $foto       = StorageSync::updateAndSync($file, $umkm->foto, $path);
         } else {
-            $validator = Validator::make($request->all(), [
-                'produk'    => 'required',
-                'slug'      => 'required',
-                'harga'     => 'required|numeric',
-                'no_hp'     => 'required|numeric',
-                'deskripsi' => 'required'
-            ], [
-                'produk.required'       => 'Wajib menambahkan nama produk !',
-                'slug.required'         => 'Slug tidak boleh kosong !',
-                'harga.required'        => 'Wajib menambahkan harga !',
-                'harga.numeric'         => 'Tambahkan format angka !',
-                'no_hp.required'        => 'Wajib menambahkan No Hp !',
-                'no_hp.numeric'         => 'Tambahkan format angka !',
-                'deskripsi.required'    => 'Wajib menambahkan deskripsi produk !'
-            ]);
-            $foto = $umkm->foto;
+            $foto       = $umkm->foto;
         }
         if ($validator->fails()) {
             return redirect("/admin/umkm/{$umkm->id}/edit")
@@ -174,7 +153,7 @@ class AdminUmkmController extends Controller
     public function destroy($id)
     {
         $umkm = Umkm::find($id);
-        unlink('.' . Storage::url($umkm->foto));
+        StorageSync::deleteAndSync($umkm->foto);
         $umkm->delete();
 
         return redirect('/admin/umkm')->with('success', 'Berhasil menghapus produk umkm');

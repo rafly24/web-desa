@@ -1,0 +1,33 @@
+@startuml
+title Activity Diagram - Admin Login
+
+|Admin Desa|
+start
+:Membuka Situs;
+
+|Sistem|
+:Menampilkan Halaman Login;
+
+|Admin Desa|
+:Memasukkan Email dan Password;
+:Menekan Tombol Login;
+
+|Sistem|
+if (Kredensial Valid?) then (Valid)
+    :Membuat Session Login;
+    :Menampilkan Halaman Dashboard Admin;
+    |Admin Desa|
+    :Melihat Dashboard Admin;
+else (Tidak Valid)
+    :Menampilkan Pesan Error
+    Email atau Password Salah;
+    |Admin Desa|
+    :Memasukkan Ulang Kredensial;
+    :Menekan Tombol Login;
+    |Sistem|
+    :Membuat Session Login;
+    :Menampilkan Halaman Dashboard Admin;
+endif
+
+stop
+@enduml

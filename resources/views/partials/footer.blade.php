@@ -5,7 +5,7 @@
         <div class="row">
 
           <div class="col-lg-6 col-md-6 footer-info">
-            <img src="{{ asset('storage/' . $logo->logo) }}" class="mb-2" alt="Logo" width="250">
+            <img src="{{ asset('storage/' . $logo->logo) }}" class="mb-2" alt="Logo Portal Desa" width="250" height="120" style="max-height: 120px; max-width: 250px; width: auto; object-fit: contain;" loading="lazy">
             <h3>{{ $nm_desa }}</h3>
             <p>
               Kecamatan {{ $kecamatan }}, Kabupaten {{ $kabupaten }}, <br> Provinsi {{ $provinsi }}, Kode Pos {{ $kode_pos }}<br><br>
@@ -41,9 +41,5 @@
       </div>
     </div>
 
-    <div class="container">
-      <div class="copyright">
-        &copy; Copyright <strong><span>2025</span></strong>. || Repost By : <a href="https://www.youtube.com/@kaseps8304/videos">Kasep_Code</a>
-      </div>
-    </div>
+
   </footer><!-- End Footer -->

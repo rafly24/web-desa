@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Helpers\StorageSync;
 use App\Models\Berita;
 use App\Models\Anggaran;
 use Illuminate\Http\Request;
@@ -52,9 +52,7 @@ class AdminAnggaranController extends Controller
         if ($request->hasFile('gambar')) {
             $path       = 'img-anggaran/';
             $file       = $request->file('gambar');
-            $extension  = $file->getClientOriginalExtension();
-            $fileName   = uniqid() . '.' . $extension;
-            $gambar     = $file->storeAs($path, $fileName, 'public');
+            $gambar     = StorageSync::storeAndSync($file, $path);
         } else {
             $gambar     = null;
         }
@@ -104,14 +102,9 @@ class AdminAnggaranController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            if ($anggaran->gambar) {
-                unlink('.' . Storage::url($anggaran->gambar));
-            }
             $path       = 'img-anggaran/';
             $file       = $request->file('gambar');
-            $extension  = $file->getClientOriginalExtension();
-            $fileName   = uniqid() . '.' . $extension;
-            $gambar     = $file->storeAs($path, $fileName, 'public');
+            $gambar     = StorageSync::updateAndSync($file, $anggaran->gambar, $path);
         } else {
             $validator = Validator::make($request->all(), [
                 'judul'        => 'required',
@@ -144,7 +137,7 @@ class AdminAnggaranController extends Controller
     public function destroy(string $id)
     {
         $anggaran = Anggaran::find($id);
-        unlink('.' . Storage::url($anggaran->gambar));
+        StorageSync::deleteAndSync($anggaran->gambar);
         $anggaran->delete();
 
         return redirect()->back()->with('success', 'Berhasil menghapus data !');

@@ -12,7 +12,6 @@ class PengajuanSurat extends Model
     protected $table = 'pengajuan_surat';
 
     protected $fillable = [
-        'user_id',
         'nomor_pengajuan',
         'nomor_surat',
         'jenis_surat_id',
@@ -22,23 +21,27 @@ class PengajuanSurat extends Model
         'tanggal_lahir',
         'jenis_kelamin',
         'alamat',
-        'rt_rw',
-        'desa_kelurahan',
-        'kecamatan',
-        'kabupaten',
         'pekerjaan',
-        'no_telepon',
+        'agama',
+        'kebangsaan',
+        'status_perkawinan',
         'keperluan',
         'data_tambahan',
         'file_ktp',
         'file_kk',
         'file_pendukung',
         'status',
-        'catatan_admin',
         'file_surat_jadi',
         'tanggal_diproses',
         'tanggal_selesai',
-        'diproses_oleh'
+        'diproses_oleh',
+        'nama_anak',
+        'jenis_kelamin_anak',
+        'tempat_lahir_anak',
+        'tanggal_lahir_anak',
+        'nik_anak',
+        'pekerjaan_anak',
+        'alamat_anak'
     ];
 
     protected $casts = [

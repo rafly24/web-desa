@@ -13,7 +13,7 @@
             <div class="col-lg-4 col-md-6 mb-3" data-aos="fade-up">
                 <div class="count-box news-card">
                     <div class="card">
-                        <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Berita" class="card-img-top">
+                        <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Berita" class="card-img-top" loading="lazy">
                         <div class="card-body">
                             <h5 class="card-title">{{ $berita->judul }}</h5>
                             <div class="news-date">{{ $berita->created_at->diffForHumans() }}</div>

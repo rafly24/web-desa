@@ -4,159 +4,140 @@
     <meta charset="utf-8">
     <title>Surat Keterangan Domisili</title>
     <style>
-        @page { margin: 2cm; }
+        @page { margin: 1cm 2cm 2cm 2cm; }
         body {
             font-family: 'Times New Roman', Times, serif;
             font-size: 12pt;
-            line-height: 1.6;
+            line-height: 1.5;
         }
         .kop-surat {
             text-align: center;
-            border-bottom: 3px solid #000;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            padding-bottom: 5px;
+            margin-bottom: 25px;
+            position: relative;
         }
         .kop-surat img {
-            width: 80px;
-            float: left;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 70px;
         }
-        .kop-surat h2 {
-            margin: 0;
-            font-size: 18pt;
-            font-weight: bold;
-        }
-        .kop-surat h3 {
-            margin: 5px 0;
-            font-size: 16pt;
-            font-weight: bold;
-        }
-        .kop-surat p {
-            margin: 2px 0;
-            font-size: 10pt;
-        }
+        .kop-surat h2 { margin: 0; font-size: 16pt; font-weight: bold; }
+        .kop-surat h3 { margin: 0; font-size: 14pt; font-weight: bold; }
+        .kop-surat p { margin: 0; font-size: 10pt; }
         .nomor-surat {
             text-align: center;
-            margin: 20px 0;
+            margin-bottom: 30px;
+            line-height: 1.2;
         }
-        .nomor-surat h4 {
-            margin: 5px 0;
-            text-decoration: underline;
-            font-size: 14pt;
-        }
-        .isi-surat {
-            text-align: justify;
-            margin: 20px 0;
-        }
-        .data-pemohon {
-            margin-left: 40px;
-        }
-        .data-pemohon table {
-            width: 100%;
-        }
-        .data-pemohon td {
-            padding: 3px 0;
-        }
+        .nomor-surat h4 { margin: 0; text-decoration: underline; font-size: 14pt; font-weight: bold; }
+        .nomor-surat p { margin: 0; }
+        .isi-surat { text-align: justify; }
+        .data-pemohon { margin-left: 30px; margin-top: 15px; margin-bottom: 15px; }
+        .data-pemohon table { width: 100%; border-collapse: collapse; }
+        .data-pemohon td { padding: 4px 0; vertical-align: top; }
+        .keterangan-text { margin-top: 15px; text-indent: 0; text-align: justify; }
+        .penutup { margin-top: 15px; text-indent: 0; text-align: justify; }
         .ttd {
             margin-top: 40px;
             float: right;
-            width: 300px;
-            text-align: center;
+            width: 250px;
+            text-align: left;
         }
-        .ttd-space {
-            height: 80px;
-        }
-        .footer {
-            clear: both;
-            margin-top: 100px;
-            font-size: 9pt;
-            font-style: italic;
-        }
+        .ttd-space { height: 90px; }
+        .ttd-name { font-weight: bold; text-decoration: underline; letter-spacing: 2px;}
     </style>
 </head>
 <body>
-    <!-- KOP SURAT -->
+    @php
+        $path = public_path('assets/img/logo-malang.png');
+        if(file_exists($path)){
+            $type = pathinfo($path, PATHINFO_EXTENSION);
+            $data = file_get_contents($path);
+            $logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        } else {
+            $logo = '';
+        }
+    @endphp
     <div class="kop-surat">
-        <h2>PEMERINTAH KABUPATEN TEMANGGUNG</h2>
-        <h3>KECAMATAN CANDIROTO</h3>
-        <h3>DESA KARANGDUREN</h3>
-        <p>Jl. Raya Karangduren, Kec. Candiroto, Kab. Temanggung, Jawa Tengah</p>
-        <p>Email: desakarangduren@gmail.com | Telp: (0293) XXXXXX</p>
+        @if($logo)
+            <img src="{{ $logo }}" alt="Logo Kabupaten Malang">
+        @endif
+        <h2>PEMERINTAH KABUPATEN MALANG</h2>
+        <h2>KECAMATAN PAKISAJI</h2>
+        <h2>DESA KARANGDUREN</h2>
+        <p><strong>Jl. Raya Karangduren No. 60-62</strong></p>
+        <p><strong>Pakisaji 65162</strong></p>
     </div>
 
-    <!-- NOMOR SURAT -->
     <div class="nomor-surat">
         <h4>SURAT KETERANGAN DOMISILI</h4>
-        <p>Nomor: {{ $nomor_surat }}</p>
+        <p>Nomor : 474/_____/35.07.19.2005/____</p>
     </div>
 
-    <!-- ISI SURAT -->
     <div class="isi-surat">
-        <p style="text-indent: 40px;">
-            Yang bertanda tangan di bawah ini, Kepala Desa Karangduren, Kecamatan Candiroto, Kabupaten Temanggung, 
-            menerangkan dengan sebenarnya bahwa:
-        </p>
+        <p>Dengan ini menerangkan dengan sebenarnya bahwa:</p>
 
         <div class="data-pemohon">
             <table>
                 <tr>
                     <td width="200">Nama</td>
                     <td width="20">:</td>
-                    <td><strong>{{ $pengajuan->nama_lengkap }}</strong></td>
-                </tr>
-                <tr>
-                    <td>NIK</td>
-                    <td>:</td>
-                    <td>{{ $pengajuan->nik }}</td>
-                </tr>
-                <tr>
-                    <td>Tempat, Tanggal Lahir</td>
-                    <td>:</td>
-                    <td>{{ $pengajuan->tempat_lahir }}, {{ \Carbon\Carbon::parse($pengajuan->tanggal_lahir)->format('d F Y') }}</td>
+                    <td>{{ strtoupper($pengajuan->nama_lengkap) }}</td>
                 </tr>
                 <tr>
                     <td>Jenis Kelamin</td>
                     <td>:</td>
-                    <td>{{ $pengajuan->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                    <td>{{ $pengajuan->jenis_kelamin == 'L' ? 'Laki - laki' : 'Perempuan' }}</td>
                 </tr>
                 <tr>
-                    <td>Pekerjaan</td>
+                    <td>Tempat Tanggal Lahir</td>
                     <td>:</td>
-                    <td>{{ $pengajuan->pekerjaan ?? '-' }}</td>
+                    <td>{{ ucwords($pengajuan->tempat_lahir) }} {{ \Carbon\Carbon::parse($pengajuan->tanggal_lahir)->locale('id')->format('d F Y') }}</td>
+                </tr>
+                <tr>
+                    <td>Kebangsaan</td>
+                    <td>:</td>
+                    <td>{{ ucwords($pengajuan->kebangsaan) }}</td>
+                </tr>
+                <tr>
+                    <td>Agama</td>
+                    <td>:</td>
+                    <td>{{ ucwords($pengajuan->agama) }}</td>
+                </tr>
+                <tr>
+                    <td>Status Perkawinan</td>
+                    <td>:</td>
+                    <td>{{ ucwords($pengajuan->status_perkawinan) }}</td>
+                </tr>
+                <tr>
+                    <td>No KTP</td>
+                    <td>:</td>
+                    <td>{{ $pengajuan->nik }}</td>
                 </tr>
                 <tr>
                     <td>Alamat</td>
                     <td>:</td>
-                    <td>{{ $pengajuan->alamat }}, RT/RW {{ $pengajuan->rt_rw }}, Desa {{ $pengajuan->desa_kelurahan }}, Kecamatan {{ $pengajuan->kecamatan }}, Kabupaten {{ $pengajuan->kabupaten }}</td>
+                    <td>{{ ucwords($pengajuan->alamat) }}</td>
                 </tr>
             </table>
         </div>
 
-        <p style="text-indent: 40px; margin-top: 20px;">
-            Adalah benar warga Desa Karangduren dan berdomisili di alamat tersebut di atas.
-        </p>
+        <div class="keterangan-text">
+            Bahwa nama tersebut diatas benar-benar berdomisili di {{ ucwords($pengajuan->alamat) }} Desa Karangduren Kecamatan Pakisaji Kabupaten Malang.
+        </div>
 
-        <p style="text-indent: 40px;">
-            Surat keterangan ini dibuat untuk keperluan: <strong>{{ $pengajuan->keperluan }}</strong>
-        </p>
-
-        <p style="text-indent: 40px;">
-            Demikian surat keterangan ini dibuat dengan sebenarnya untuk dapat dipergunakan sebagaimana mestinya.
+        <p class="penutup">
+            Demikian Surat Domisili ini kami buat dengan sebenarnya agar dapat dipergunakan sebagaimana mestinya.
         </p>
     </div>
 
-    <!-- TANDA TANGAN -->
     <div class="ttd">
-        <p>Karangduren, {{ \Carbon\Carbon::parse($pengajuan->tanggal_selesai)->format('d F Y') }}</p>
-        <p><strong>Kepala Desa Karangduren</strong></p>
+        <p style="margin:0;">Karangduren, {{ \Carbon\Carbon::parse($pengajuan->tanggal_selesai)->locale('id')->format('d F Y') }}</p>
+        <p style="margin:0;">Kepala Desa Karangduren</p>
+        <p style="margin:0;">Sekretaris Desa</p>
         <div class="ttd-space"></div>
-        <p><strong><u>NAMA KEPALA DESA</u></strong></p>
-        <p>NIP. XXXX XXXX XXXX XXXX</p>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-        <p>* Surat ini dibuat secara elektronik dan sah tanpa tanda tangan basah</p>
-        <p>* Dicetak pada: {{ \Carbon\Carbon::now()->format('d F Y H:i') }} WIB</p>
+        <p class="ttd-name" style="margin:0;">S A I F U L</p>
     </div>
 </body>
 </html>

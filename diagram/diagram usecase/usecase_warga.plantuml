@@ -1,0 +1,45 @@
+@startuml
+left to right direction
+
+skinparam packageStyle rectangle
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+}
+
+actor "Warga (Penduduk)" as warga
+
+rectangle "Sub-Sistem Warga Desa" <<subsystem>> {
+    
+    usecase "Melihat Informasi Publik" as UC_Info
+    
+    ' Autentikasi
+    usecase "Login ke Sistem" as UC_Login
+    usecase "Registrasi Akun Baru" as UC_Register
+    
+    ' Fitur Utama Warga
+    usecase "Mengajukan Surat Online" as UC_Surat
+    usecase "Melacak Status Surat" as UC_Track
+    usecase "Membuat Laporan Aduan" as UC_Lapor
+}
+
+' Relasi Langsung
+warga -- UC_Info
+warga -- UC_Login
+warga -- UC_Surat
+warga -- UC_Track
+warga -- UC_Lapor
+
+' Relasi Wajib (Include) ke arah Login
+UC_Surat ..> UC_Login : <<include>>
+UC_Track ..> UC_Login : <<include>>
+UC_Lapor ..> UC_Login : <<include>>
+
+' Relasi Tambahan (Extend)
+UC_Login <.. UC_Register : <<extend>>
+
+@enduml

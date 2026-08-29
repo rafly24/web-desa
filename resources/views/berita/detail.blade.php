@@ -18,7 +18,7 @@
                                     <span><i class="bi bi-fire">Dibaca {{ $berita->views }} Kali</i></span>
                                 </div>
 
-                                <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Andalan" class="img-fluid rounded mb-5" style="height: 450px; width: 100%;">
+                                <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Andalan" class="img-fluid rounded mb-5" style="height: 450px; width: 100%;" loading="lazy">
                                 <p>{!! $berita->body !!}</p>
 
                                 <i class="bi bi-tags"></i> <a href="#" type="button" class="btn btn-secondary btn-sm my-2">{{ $berita->kategori->kategori }}</a>
@@ -80,10 +80,10 @@
                                                         @csrf
                                                         <input type="hidden" value="{{ $comment->id }}" name="comment_id">
                                                         <div class="mb-3">
-                                                            <input type="text" class="form-control" placeholder="Nama" name="replyNama">
+                                                            <input type="text" class="form-control" placeholder="Nama" name="replyNama" aria-label="Nama Pembalas">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <input type="email" class="form-control" placeholder="Email" name="replyEmail">
+                                                            <input type="email" class="form-control" placeholder="Email" name="replyEmail" aria-label="Email Pembalas">
                                                         </div>
                                                         <div class="mb-3">
                                                             <textarea class="form-control" placeholder="Balasan Komentar" name="replyBody" rows="3"></textarea>
@@ -105,7 +105,7 @@
 
                                     <div class="mb-3">
                                         <label for="nama" class="form-label">Nama</label>
-                                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama">
+                                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" aria-label="Nama">
                                         @error('nama')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -115,7 +115,7 @@
 
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email">
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" aria-label="Email">
                                         @error('email')
                                             <div class="invalid-feedback">
                                                 {{ $message }}

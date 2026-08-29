@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Slider;
+use App\Helpers\StorageSync;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -49,15 +50,9 @@ class AdminSliderController extends Controller
         ]);
     
         if($request->hasFile('img_slider')){
-            if($slider->img_slider){
-                Storage::disk('public')->delete($slider->img_slider);
-            }
-    
             $path       = 'img-slider/';
             $file       = $request->file('img_slider');
-            $extension  = $file->getClientOriginalExtension(); 
-            $fileName   = uniqid() . '.' . $extension; 
-            $img_slider = $file->storeAs($path, $fileName, 'public');
+            $img_slider = StorageSync::updateAndSync($file, $slider->img_slider, $path);
         } else {
             $validator = Validator::make($request->all(), [
                 'judul'         => 'required',

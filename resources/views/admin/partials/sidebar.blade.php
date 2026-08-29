@@ -2,8 +2,8 @@
     <!-- Sidebar scroll-->
     <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-            <a href="/" class="text-nowrap logo-img my-2">
-                <img src="{{ asset('storage/' . $logo->logo) }}" alt="Logo" width="200">
+            <a href="/" class="text-nowrap logo-img my-2 d-flex justify-content-center w-100">
+                <img src="{{ asset('storage/' . $logo->logo) }}" alt="Logo Web Desa Karangduren" style="max-height: 80px; max-width: 100%; object-fit: contain;">
             </a>
             <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                 <i class="ti ti-x fs-8"></i>
@@ -235,6 +235,27 @@
                             <i class="ti ti-mail-forward"></i>
                         </span>
                         <span class="hide-menu">Kontak</span>
+                    </a>
+                </li>
+
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">Layanan Warga</span>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="/admin/pengajuan-surat" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-file-text"></i>
+                        </span>
+                        <span class="hide-menu">Pengajuan Surat</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="/admin/laporan-warga" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-report"></i>
+                        </span>
+                        <span class="hide-menu">Laporan Warga</span>
                     </a>
                 </li>
 

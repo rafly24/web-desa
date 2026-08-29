@@ -50,10 +50,7 @@
                 <strong>Nomor Laporan:</strong><br>
                 <span class="text-primary fs-5">{{ $laporan->nomor_laporan }}</span>
               </div>
-              <div class="col-md-6 text-md-end">
-                <strong>Status:</strong><br>
-                {!! $laporan->status_badge !!}
-              </div>
+
             </div>
 
             <hr>
@@ -87,10 +84,7 @@
               <div class="col-md-8">{{ $laporan->created_at->format('d F Y H:i') }}</div>
             </div>
 
-            <div class="row mb-2">
-              <div class="col-md-4"><strong>Prioritas:</strong></div>
-              <div class="col-md-8">{!! $laporan->prioritas_badge !!}</div>
-            </div>
+
 
             @if($laporan->tanggal_ditanggapi)
             <div class="row mb-2">
@@ -99,60 +93,11 @@
             </div>
             @endif
 
-            @if($laporan->tanggal_selesai)
-            <div class="row mb-2">
-              <div class="col-md-4"><strong>Tanggal Selesai:</strong></div>
-              <div class="col-md-8">{{ $laporan->tanggal_selesai->format('d F Y H:i') }}</div>
-            </div>
-            @endif
 
-            @if($laporan->tanggapan_admin)
-            <hr>
-            <div class="alert alert-success">
-              <strong><i class="bi bi-check-circle"></i> Tanggapan:</strong><br>
-              {{ $laporan->tanggapan_admin }}
-            </div>
-            @endif
 
-            <!-- Timeline -->
-            <hr class="mt-4">
-            <h6 class="mb-3">Timeline Proses</h6>
-            <div class="timeline">
-              <div class="timeline-item completed">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                  <h6>Laporan Diterima</h6>
-                  <p class="text-muted small mb-0">{{ $laporan->created_at->format('d M Y H:i') }}</p>
-                </div>
-              </div>
 
-              <div class="timeline-item {{ in_array($laporan->status, ['diproses', 'ditindaklanjuti', 'selesai']) ? 'completed' : 'pending' }}">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                  <h6>Sedang Diproses</h6>
-                  @if($laporan->tanggal_ditanggapi && in_array($laporan->status, ['diproses', 'ditindaklanjuti', 'selesai']))
-                    <p class="text-muted small mb-0">{{ $laporan->tanggal_ditanggapi->format('d M Y H:i') }}</p>
-                  @endif
-                </div>
-              </div>
 
-              <div class="timeline-item {{ in_array($laporan->status, ['ditindaklanjuti', 'selesai']) ? 'completed' : 'pending' }}">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                  <h6>Ditindaklanjuti</h6>
-                </div>
-              </div>
 
-              <div class="timeline-item {{ $laporan->status === 'selesai' ? 'completed' : ($laporan->status === 'ditolak' ? 'rejected' : 'pending') }}">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                  <h6>{{ $laporan->status === 'ditolak' ? 'Ditolak' : 'Selesai' }}</h6>
-                  @if($laporan->tanggal_selesai)
-                    <p class="text-muted small mb-0">{{ $laporan->tanggal_selesai->format('d M Y H:i') }}</p>
-                  @endif
-                </div>
-              </div>
-            </div>
 
             <div class="text-center mt-4">
               <a href="{{ route('laporan-warga.detail', $laporan->id) }}" class="btn btn-primary">

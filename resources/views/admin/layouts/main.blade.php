@@ -5,12 +5,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard Admin - Website Portal Desa Kragilan</title>
-  <link rel="shortcut icon" type="image/png" href="/admin/assets/images/logos/favicon.png" />
+  <title>Dashboard Admin - Web Desa Karangduren</title>
+  <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/logo-malang.png') }}" />
   <link rel="stylesheet" href="/admin/assets/css/styles.min.css" />
 
   <!-- PWA -->
-  <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
+  <link rel="manifest" href="{{ asset('manifest.webmanifest') }}" crossorigin="use-credentials">
   <meta name="theme-color" content="#0d6efd">
 
   <!-- Jquery -->
@@ -41,15 +41,15 @@
       </div>
     </div>
   </div>
-  <script src="/admin/assets/libs/jquery/dist/jquery.min.js"></script>
-  <script src="/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script src="/admin/assets/js/sidebarmenu.js"></script>
-  <script src="/admin/assets/js/app.min.js"></script>
-  <script src="/admin/assets/libs/simplebar/dist/simplebar.js"></script>
-  <script src="/admin/assets/js/dashboard.js"></script>
+
+  <script defer src="/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script defer type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script defer src="/admin/assets/js/sidebarmenu.js"></script>
+  <script defer src="/admin/assets/js/app.min.js"></script>
+  <script defer src="/admin/assets/libs/simplebar/dist/simplebar.js"></script>
+  <script defer src="/admin/assets/js/dashboard.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-  @include('sweetalert::alert')
+  @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@10'])
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {

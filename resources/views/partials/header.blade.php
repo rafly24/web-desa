@@ -4,7 +4,7 @@
 
         <div class="logo me-auto">
             <h1><a href="/">
-                    <img src="{{ asset('storage/' . $logo->logo) }}" alt="Logo">
+                    <img src="{{ asset('storage/' . $logo->logo) }}" alt="Logo Web Desa Karangduren" width="150" height="50" style="max-height: 50px; max-width: 150px; width: auto; object-fit: contain;">
                 </a></h1>
         </div>
 
@@ -45,9 +45,6 @@
                         <ul>
                             @if(Auth::user()->role == 'admin')
                                 <li><a href="/dashboard"><i class="bi bi-speedometer2"></i> Dashboard Admin</a></li>
-                            @else
-                                <li><a href="{{ route('warga.dashboard') }}"><i class="bi bi-house-door"></i> Dashboard Saya</a></li>
-                                <li><a href="{{ route('warga.profile') }}"><i class="bi bi-person"></i> Profil Saya</a></li>
                             @endif
                             <li>
                                 <a href="{{ route('logout') }}" 
@@ -60,13 +57,9 @@
                             </li>
                         </ul>
                     </li>
-                @else
-                    <!-- Menu untuk guest (belum login) -->
-                    <li><a href="/login" class="nav-link scrollto"><i class="bi bi-box-arrow-in-right"></i> Masuk</a></li>
-                    <li><a href="/register" class="nav-link scrollto" style="background: #5846f9; color: white; padding: 8px 20px; border-radius: 50px;"><i class="bi bi-person-plus"></i> Daftar</a></li>
                 @endauth
             </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
+            <i class="bi bi-list mobile-nav-toggle" aria-label="Toggle navigation" role="button" tabindex="0"></i>
         </nav><!-- .navbar -->
 
     </div>

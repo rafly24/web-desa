@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Helpers\StorageSync;
 use App\Models\Berita;
 use App\Models\Kategori;
 use App\Models\PostStatus;
@@ -65,9 +65,7 @@ class AdminBeritaController extends Controller
         if($request->hasFile('gambar')){
             $path       = 'img-berita/';
             $file       = $request->file('gambar');
-            $extension  = $file->getClientOriginalExtension(); 
-            $fileName   = uniqid() . '.' . $extension; 
-            $gambar     = $file->storeAs($path, $fileName, 'public');
+            $gambar     = StorageSync::storeAndSync($file, $path);
         } else {
             $gambar     = null;
         }
@@ -82,12 +80,22 @@ class AdminBeritaController extends Controller
             'judul'         =>  $request->judul,
             'slug'          =>  $request->slug,
             'body'          =>  $request->body,
-            'gambar'        =>  $path . $fileName,
+            'gambar'        =>  $gambar,
             'excerpt'       =>  Str::limit(strip_tags($request->body), 100),
             'user_id'       =>  auth()->user()->id,
             'status_id'     =>  $request->status_id,
             'kategori_id'   =>  $request->kategori_id
         ]);
+
+        // 🔔 KIRIM PUSH NOTIFICATION jika status = published (2)
+        if ($request->status_id == 2) {
+            try {
+                $fcmService = app(\App\Services\FcmService::class);
+                $fcmService->notifyNewBerita($berita);
+            } catch (\Exception $e) {
+                \Log::error('Failed to send FCM notification: ' . $e->getMessage());
+            }
+        }
 
         return redirect('/admin/berita')->with('success', 'Berhasil menambahkan data berita');
     }
@@ -131,14 +139,9 @@ class AdminBeritaController extends Controller
         }
 
         if($request->hasFile('gambar')){
-            if($berita->gambar){
-                unlink('.' .Storage::url($berita->gambar));
-            }
             $path       = 'img-berita/';
             $file       = $request->file('gambar');
-            $extension  = $file->getClientOriginalExtension(); 
-            $fileName   = uniqid() . '.' . $extension; 
-            $gambar     = $file->storeAs($path, $fileName, 'public');
+            $gambar     = StorageSync::updateAndSync($file, $berita->gambar, $path);
         } else {
             $validator = Validator::make($request->all(), [
                 'judul'         => 'required|max:255',
@@ -182,7 +185,7 @@ class AdminBeritaController extends Controller
     public function destroy($id)
     {
         $berita = Berita::find($id);
-        unlink('.'.Storage::url($berita->gambar));
+        StorageSync::deleteAndSync($berita->gambar);
         $berita->delete();
 
         return redirect('/admin/berita')->with('success', 'Berhasil menghapus berita');

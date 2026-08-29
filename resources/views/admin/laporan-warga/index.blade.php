@@ -22,41 +22,7 @@
                 </div>
             @endif
 
-            <!-- Statistics Cards -->
-            <div class="row mb-4">
-                <div class="col-md-3">
-                    <div class="card bg-primary text-white">
-                        <div class="card-body">
-                            <h3>{{ $stats['baru'] }}</h3>
-                            <p class="mb-0">Laporan Baru</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-info text-white">
-                        <div class="card-body">
-                            <h3>{{ $stats['diproses'] }}</h3>
-                            <p class="mb-0">Diproses</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-warning text-white">
-                        <div class="card-body">
-                            <h3>{{ $stats['ditindaklanjuti'] }}</h3>
-                            <p class="mb-0">Ditindaklanjuti</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-success text-white">
-                        <div class="card-body">
-                            <h3>{{ $stats['selesai'] }}</h3>
-                            <p class="mb-0">Selesai</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <div class="row">
                 <div class="table-responsive">
@@ -66,9 +32,7 @@
                                 <th>No</th>
                                 <th>No. Laporan</th>
                                 <th>Kategori</th>
-                                <th>Judul</th>
                                 <th>Pelapor</th>
-                                <th>Prioritas</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -83,9 +47,7 @@
                                             {{ $item->kategoriLaporan->nama_kategori }}
                                         </span>
                                     </td>
-                                    <td>{{ \Str::limit($item->judul_laporan, 40) }}</td>
-                                    <td>{{ $item->is_anonim ? 'Anonim' : $item->nama_pelapor }}</td>
-                                    <td>{!! $item->prioritas_badge !!}</td>
+                                    <td>{{ $item->nama_pelapor }}</td>
                                     <td>{!! $item->status_badge !!}</td>
                                     <td>
                                         <a href="{{ route('admin.laporan-warga.show', $item->id) }}" 

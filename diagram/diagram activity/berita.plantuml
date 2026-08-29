@@ -1,0 +1,73 @@
+@startuml
+' --- PENGATURAN VISUAL ---
+skinparam activity {
+    BackgroundColor white
+    BorderColor black
+    FontColor black
+}
+skinparam swimlane {
+    BorderColor black
+    BorderThickness 2
+    TitleFontColor black
+}
+skinparam condition {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam ArrowColor black
+skinparam defaultTextAlignment center
+
+' --- MENDUPLIKASI GARIS SWIMLANE (KOLOM VERTICAL) ---
+|Admin Desa|
+|Sistem|
+|Pengunjung / Warga|
+
+' --- MULAI ALUR ---
+|Admin Desa|
+start
+:Membuka Dashboard Admin\n& Memilih Menu Manajemen Berita;
+
+|Sistem|
+:Menampilkan Halaman\nDaftar Berita & Pengumuman;
+
+|Admin Desa|
+:Menekan Tombol\n"Tambah Berita Baru";
+
+|Sistem|
+:Menampilkan Form Editor\nArtikel Berita;
+
+' Proses Validasi Input Berita
+repeat
+    |Admin Desa|
+    :Mengisi Judul, Kategori, Isi Teks\n& Mengunggah Gambar Thumbnail;
+    :Menekan Tombol "Simpan & Publish";
+
+    |Sistem|
+    if (Input Data Valid?) then (Ya)
+        break
+    else (Kosong/Format Salah)
+        :Tampilkan Pesan Error\n(Contoh: Judul Kosong / Foto Kebesaran);
+        |Admin Desa|
+        :Lengkapi Kolom Kosong\nAtau Ganti Gambar;
+    endif
+repeat while (Coba Simpan Lagi)
+
+|Sistem|
+:Menyimpan Data Artikel\nke Database (Tabel beritas);
+:Mengatur Status Menjadi:\n"Terpublikasi / Published";
+:Menempelkan Berita Terbaru\ndi Halaman Utama (Homepage);
+
+|Pengunjung / Warga|
+:Aktor Mengakses URL\nPortal Web Desa;
+
+|Sistem|
+:Memuat Data Berita\nDari Database ke Layar;
+
+|Pengunjung / Warga|
+:Melihat Daftar Berita Terbaru\n& Mengeklik Salah Satu Judul;
+
+|Sistem|
+:Menampilkan Halaman Detail\nIsi Portal Berita / Pengumuman Secara Penuh;
+
+stop
+@enduml

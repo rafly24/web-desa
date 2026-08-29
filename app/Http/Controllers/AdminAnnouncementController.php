@@ -50,13 +50,21 @@ class AdminAnnouncementController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        Announcement::create([
+        $pengumuman = Announcement::create([
             'judul'             => $request->judul,
             'slug'              => $request->slug,
             'isi_pengumuman'    => $request->isi_pengumuman,
             'excerpt'           => Str::limit(strip_tags($request->isi_pengumuman), 200),
             'user_id'           => auth()->user()->id
         ]);
+
+        // 🔔 KIRIM PUSH NOTIFICATION untuk pengumuman
+        try {
+            $fcmService = app(\App\Services\FcmService::class);
+            $fcmService->notifyNewPengumuman($pengumuman);
+        } catch (\Exception $e) {
+            \Log::error('Failed to send FCM notification: ' . $e->getMessage());
+        }
 
         return redirect('/admin/pengumuman')->with('success', 'Berhasil menambahkan data baru');
     }

@@ -53,6 +53,10 @@ use App\Http\Controllers\AdminIdentitasSitusController;
 |
 */
 
+Route::get('/offline', function () {
+    return view('offline');
+});
+
 Route::get('/', [BerandaController::class, 'index']);
 
 Route::get('/berita/{beritas:slug}', [BeritaController::class, 'berita']);
@@ -94,16 +98,16 @@ Route::get('/apbdesa/{anggaran:slug}', [AnggaranController::class, 'detail']);
 Route::get('/pengajuan-surat', [App\Http\Controllers\PengajuanSuratController::class, 'index'])->name('pengajuan-surat.index');
 Route::get('/pengajuan-surat/create/{kode_surat}', [App\Http\Controllers\PengajuanSuratController::class, 'create'])->name('pengajuan-surat.create');
 Route::post('/pengajuan-surat', [App\Http\Controllers\PengajuanSuratController::class, 'store'])->name('pengajuan-surat.store');
-Route::get('/pengajuan-surat/tracking/{nomor?}', [App\Http\Controllers\PengajuanSuratController::class, 'tracking'])->name('pengajuan-surat.tracking');
-Route::post('/pengajuan-surat/cek-status', [App\Http\Controllers\PengajuanSuratController::class, 'cekStatus'])->name('pengajuan-surat.cek-status');
 
 // Laporan Warga
 Route::get('/laporan-warga', [App\Http\Controllers\LaporanWargaController::class, 'index'])->name('laporan-warga.index');
 Route::get('/laporan-warga/create', [App\Http\Controllers\LaporanWargaController::class, 'create'])->name('laporan-warga.create');
 Route::post('/laporan-warga', [App\Http\Controllers\LaporanWargaController::class, 'store'])->name('laporan-warga.store');
-Route::get('/laporan-warga/{id}', [App\Http\Controllers\LaporanWargaController::class, 'detail'])->name('laporan-warga.detail');
-Route::get('/laporan-warga/tracking/{nomor?}', [App\Http\Controllers\LaporanWargaController::class, 'tracking'])->name('laporan-warga.tracking');
-Route::post('/laporan-warga/cek-status', [App\Http\Controllers\LaporanWargaController::class, 'cekStatus'])->name('laporan-warga.cek-status');
+Route::get('/laporan-warga/detail/{id}', [App\Http\Controllers\LaporanWargaController::class, 'detail'])->name('laporan-warga.detail');
+
+// FCM Token API
+Route::post('/api/fcm-token', [App\Http\Controllers\Api\FcmTokenController::class, 'store'])->name('api.fcm-token.store');
+Route::delete('/api/fcm-token', [App\Http\Controllers\Api\FcmTokenController::class, 'destroy'])->name('api.fcm-token.destroy');
 
 //Admin Dashboard 
 Auth::routes();

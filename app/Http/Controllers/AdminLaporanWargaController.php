@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KategoriLaporan;
 use App\Models\LaporanWarga;
+use App\Helpers\StorageSync;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -39,47 +40,7 @@ class AdminLaporanWargaController extends Controller
         return view('admin.laporan-warga.show', compact('laporan'));
     }
 
-    public function updateStatus(Request $request, $id)
-    {
-        $request->validate([
-            'status' => 'required|in:baru,diproses,ditindaklanjuti,selesai,ditolak',
-            'prioritas' => 'nullable|in:rendah,sedang,tinggi',
-            'tanggapan_admin' => 'nullable|string',
-            'foto_tindak_lanjut' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
-        ]);
-
-        $laporan = LaporanWarga::findOrFail($id);
-
-        $data = [
-            'status' => $request->status,
-            'tanggapan_admin' => $request->tanggapan_admin,
-            'ditangani_oleh' => Auth::id(),
-        ];
-
-        if ($request->has('prioritas')) {
-            $data['prioritas'] = $request->prioritas;
-        }
-
-        if ($request->status === 'diproses' && $laporan->status === 'baru') {
-            $data['tanggal_ditanggapi'] = now();
-        }
-
-        if ($request->status === 'selesai') {
-            $data['tanggal_selesai'] = now();
-        }
-
-        if ($request->hasFile('foto_tindak_lanjut')) {
-            if ($laporan->foto_tindak_lanjut) {
-                Storage::disk('public')->delete($laporan->foto_tindak_lanjut);
-            }
-            $data['foto_tindak_lanjut'] = $request->file('foto_tindak_lanjut')->store('laporan-tindak-lanjut', 'public');
-        }
-
-        $laporan->update($data);
-
-        Alert::success('Berhasil!', 'Status laporan berhasil diperbarui');
-        return redirect()->back();
-    }
+    // UpdateStatus dihapus sesuai requirement (admin hanya readonly)
 
     public function destroy($id)
     {
@@ -88,11 +49,8 @@ class AdminLaporanWargaController extends Controller
         // Delete files
         if ($laporan->foto_bukti) {
             foreach ($laporan->foto_bukti as $foto) {
-                Storage::disk('public')->delete($foto);
+                StorageSync::deleteAndSync($foto);
             }
-        }
-        if ($laporan->foto_tindak_lanjut) {
-            Storage::disk('public')->delete($laporan->foto_tindak_lanjut);
         }
 
         $laporan->delete();

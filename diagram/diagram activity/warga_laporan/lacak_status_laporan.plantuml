@@ -1,0 +1,37 @@
+@startuml
+title Activity Diagram - Warga Melacak Status Laporan
+
+|Warga|
+start
+:Membuka Situs Web Desa;
+
+|Sistem|
+:Menampilkan Halaman Beranda;
+
+|Warga|
+:Memilih Menu Laporan Warga;
+
+|Sistem|
+:Menampilkan Halaman Laporan Warga;
+
+|Warga|
+:Memasukkan Nomor Laporan;
+:Menekan Tombol Cek Status;
+
+|Sistem|
+if (Nomor Laporan Ditemukan?) then (Ditemukan)
+    :Menampilkan Detail Status Laporan
+    (kategori, deskripsi, foto bukti,
+    status: baru/diproses/ditindaklanjuti/selesai,
+    tanggal pelaporan);
+    |Warga|
+    :Mengetahui Status Terkini Laporan;
+else (Tidak Ditemukan)
+    :Menampilkan Pesan
+    Nomor Laporan Tidak Ditemukan;
+    |Warga|
+    :Memeriksa Kembali Nomor Laporan;
+endif
+
+stop
+@enduml

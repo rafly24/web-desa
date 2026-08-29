@@ -1,0 +1,53 @@
+@startuml
+title Sistem Informasi Web Desa
+
+left to right direction
+skinparam DefaultFontName Arial
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+    ArrowColor black
+}
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam shadowing false
+
+actor "Warga Publik" as warga
+actor "Admin Desa" as admin
+
+usecase "Melakukan Login" as UC_Login
+
+' --- Sisi Warga ---
+usecase "Melihat Informasi Publik" as UC_Info
+usecase "Melakukan Pengajuan Surat" as UC_Surat
+usecase "Membuat Laporan Warga" as UC_Lapor
+
+warga --> UC_Info
+warga --> UC_Surat
+warga --> UC_Lapor
+
+UC_Surat ..> UC_Login : <<include>>
+UC_Lapor ..> UC_Login : <<include>>
+
+' --- Sisi Admin ---
+usecase "Kelola Profil Desa" as UC_Profil
+usecase "Kelola Info & Konten" as UC_Konten
+usecase "Kelola Data Master & Konten" as UC_Master
+usecase "Pelayanan Publik" as UC_Pelayanan
+usecase "Pengaturan Sistem" as UC_Sistem
+
+admin --> UC_Profil
+admin --> UC_Konten
+admin --> UC_Master
+admin --> UC_Pelayanan
+admin --> UC_Sistem
+
+UC_Profil ..> UC_Login : <<include>>
+UC_Konten ..> UC_Login : <<include>>
+UC_Master ..> UC_Login : <<include>>
+UC_Pelayanan ..> UC_Login : <<include>>
+UC_Sistem ..> UC_Login : <<include>>
+
+@enduml

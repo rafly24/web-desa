@@ -7,14 +7,10 @@ use App\Models\PengajuanSurat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PengajuanSuratController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth')->except(['index']);
-    }
-
     public function index()
     {
         $jenisSurat = JenisSurat::where('is_active', true)->get();
@@ -24,73 +20,102 @@ class PengajuanSuratController extends Controller
     public function create($kode_surat)
     {
         $jenisSurat = JenisSurat::where('kode_surat', $kode_surat)->where('is_active', true)->firstOrFail();
-        $user = auth()->user();
-        return view('pengajuan-surat.create', compact('jenisSurat', 'user'));
+        return view('pengajuan-surat.create', compact('jenisSurat'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'jenis_surat_id' => 'required|exists:jenis_surat,id',
-            'keperluan' => 'required|string',
-            'file_ktp' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
-            'file_kk' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
-            'file_pendukung' => 'nullable|file|mimes:jpeg,jpg,png,pdf|max:2048',
+            'nik' => 'required|string|max:16',
+            'nama_lengkap' => 'required|string|max:255',
+            'tempat_lahir' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:L,P',
+            'kebangsaan' => 'required|string|max:255',
+            'agama' => 'required|string|max:255',
+            'status_perkawinan' => 'required|string|max:255',
+            'pekerjaan' => 'required|string|max:255',
+            'alamat' => 'required|string',
         ]);
 
-        $user = auth()->user();
+        $jenisSurat = JenisSurat::find($request->jenis_surat_id);
+        
+        $validatedKeperluan = $request->validate([
+            'keperluan' => $jenisSurat && $jenisSurat->kode_surat == 'SKD' ? 'nullable|string' : 'required|string',
+        ]);
+        $validated = array_merge($validated, $validatedKeperluan);
 
-        // Data otomatis dari user profile
-        $validated['user_id'] = $user->id;
-        $validated['nik'] = $user->nik;
-        $validated['nama_lengkap'] = $user->name;
-        $validated['tempat_lahir'] = $user->tempat_lahir;
-        $validated['tanggal_lahir'] = $user->tanggal_lahir;
-        $validated['jenis_kelamin'] = $user->jenis_kelamin == 'Laki-laki' ? 'L' : 'P';
-        $validated['alamat'] = $user->alamat;
-        $validated['rt_rw'] = $user->rt_rw;
-        $validated['no_telepon'] = $user->no_telepon;
-        $validated['desa_kelurahan'] = 'Karangduren'; // Default desa
-        $validated['kecamatan'] = 'Kecamatan';
-        $validated['kabupaten'] = 'Kabupaten';
-        $validated['pekerjaan'] = '-'; // Optional
-
-        // Upload files
-        if ($request->hasFile('file_ktp')) {
-            $validated['file_ktp'] = $request->file('file_ktp')->store('pengajuan-surat/ktp', 'public');
+        if ($jenisSurat && $jenisSurat->kode_surat == 'SKTM') {
+            $validatedChild = $request->validate([
+                'nik_anak' => 'required|string|max:16',
+                'nama_anak' => 'required|string|max:255',
+                'tempat_lahir_anak' => 'required|string|max:255',
+                'tanggal_lahir_anak' => 'required|date',
+                'jenis_kelamin_anak' => 'required|in:L,P',
+                'pekerjaan_anak' => 'required|string|max:255',
+                'alamat_anak' => 'required|string',
+            ]);
+            $validated = array_merge($validated, $validatedChild);
         }
 
-        if ($request->hasFile('file_kk')) {
-            $validated['file_kk'] = $request->file('file_kk')->store('pengajuan-surat/kk', 'public');
+        if (empty($validated['keperluan'])) {
+            $validated['keperluan'] = 'Keperluan: ' . ($jenisSurat->nama_surat ?? 'Surat');
         }
 
-        if ($request->hasFile('file_pendukung')) {
-            $validated['file_pendukung'] = $request->file('file_pendukung')->store('pengajuan-surat/pendukung', 'public');
-        }
+        $validated['status'] = 'selesai';
+        $validated['tanggal_selesai'] = now();
+        
+
 
         $pengajuan = PengajuanSurat::create($validated);
-
-        Alert::success('Berhasil!', 'Pengajuan surat berhasil dikirim. Nomor pengajuan: ' . $pengajuan->nomor_pengajuan);
-        return redirect()->route('warga.dashboard');
-    }
-
-    public function tracking(Request $request, $nomor = null)
-    {
-        $pengajuan = null;
-
-        if ($nomor) {
-            $pengajuan = PengajuanSurat::with('jenisSurat')->where('nomor_pengajuan', $nomor)->first();
-        }
-
-        return view('pengajuan-surat.tracking', compact('pengajuan'));
-    }
-
-    public function cekStatus(Request $request)
-    {
-        $request->validate([
-            'nomor_pengajuan' => 'required|string',
+        
+        $pengajuan->update([
+            'nomor_surat' => $pengajuan->nomor_pengajuan
         ]);
 
-        return redirect()->route('pengajuan-surat.tracking', $request->nomor_pengajuan);
+        // Auto-generate PDF dari template
+        try {
+            $pdfPath = $this->generateSuratPDF($pengajuan, $pengajuan->nomor_surat);
+            $pengajuan->update(['file_surat_jadi' => $pdfPath]);
+            
+            // Langsung kembalikan file untuk diunduh tanpa menunggu admin
+            return response()->download(storage_path('app/public/' . $pdfPath));
+
+        } catch (\Exception $e) {
+            Alert::error('Gagal!', 'Gagal generate PDF surat: ' . $e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    private function generateSuratPDF($pengajuan, $nomor_surat)
+    {
+        $pengajuan->load('jenisSurat');
+        $kode = strtolower($pengajuan->jenisSurat->kode_surat);
+
+        // Cek apakah template tersedia
+        $templatePath = "templates.surat.{$kode}";
+        if (!view()->exists($templatePath)) {
+            throw new \Exception("Template surat untuk {$kode} tidak tersedia");
+        }
+
+        // Render HTML dari template
+        $html = view($templatePath, [
+            'pengajuan' => $pengajuan,
+            'nomor_surat' => $nomor_surat,
+        ])->render();
+
+        // Generate PDF menggunakan dompdf
+        $pdf = Pdf::loadHTML($html)
+            ->setPaper('a4', 'portrait')
+            ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
+
+        // Save PDF
+        $filename = 'surat-' . $pengajuan->nomor_pengajuan . '.pdf';
+        $path = 'surat-jadi/' . $filename;
+        
+        Storage::disk('public')->put($path, $pdf->output());
+
+        return $path;
     }
 }

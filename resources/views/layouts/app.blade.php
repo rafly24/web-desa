@@ -1,16 +1,17 @@
 
 <!doctype html>
-<html lang="en">
+<html lang="id">
 
 <head>
   <meta charset="utf-8">
+  <link rel="preconnect" href="https://www.gstatic.com">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Authentication - Website Portal Desa Cibuni</title>
-  <link rel="shortcut icon" type="image/png" href="admin/assets/images/logos/favicon.png" />
+  <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/logo-malang.png') }}" />
   <link rel="stylesheet" href="admin/assets/css/styles.min.css" />
   
   <!-- PWA -->
-  <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
+  <link rel="manifest" href="{{ asset('manifest.webmanifest') }}" crossorigin="use-credentials">
   <meta name="theme-color" content="#0d6efd">
 </head>
 

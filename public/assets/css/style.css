@@ -110,7 +110,8 @@ h6,
 
 #header .logo h1 a,
 #header .logo h1 a:hover {
-  color: #1c5c93;
+  color: #124068;
+  /* Darker for better contrast */
   text-decoration: none;
 }
 
@@ -156,7 +157,8 @@ h6,
   padding: 10px 0 10px 30px;
   font-family: "Open Sans", sans-serif;
   font-size: 15px;
-  color: #5c768d;
+  color: #4a637a;
+  /* Darker than #5c768d for better contrast */
   white-space: nowrap;
   transition: 0.3s;
 }
@@ -570,7 +572,8 @@ section {
 .breadcrumbs ol li+li::before {
   display: inline-block;
   padding-right: 10px;
-  color: #6c757d;
+  color: #596168;
+  /* Darker than #6c757d for better contrast */
   content: "/";
 }
 
@@ -804,9 +807,12 @@ section {
 
 .card {
   height: 100%;
-  border: none; /* Menghapus batas kartu */
-  box-shadow: 0px 0 16px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan */
-  border-radius: 0; /* Menghapus sudut bulat */
+  border: none;
+  /* Menghapus batas kartu */
+  box-shadow: 0px 0 16px rgba(0, 0, 0, 0.1);
+  /* Menambahkan bayangan */
+  border-radius: 0;
+  /* Menghapus sudut bulat */
 }
 
 .card-img-top {
@@ -899,22 +905,26 @@ section {
 /*--------------------------------------------------------------
 # Our Team
 --------------------------------------------------------------*/
- .member {
+.member {
   text-align: center;
   margin-bottom: 80px;
   position: relative;
 }
- .member .pic {
+
+.member .pic {
   border-radius: 4px;
   overflow: hidden;
 }
- .member img {
+
+.member img {
   transition: all ease-in-out 0.4s;
 }
- .member:hover img {
+
+.member:hover img {
   transform: scale(1.1);
 }
- .member .member-info {
+
+.member .member-info {
   position: absolute;
   bottom: -48px;
   left: 20px;
@@ -923,7 +933,8 @@ section {
   padding: 15px 0;
   border-radius: 4px;
 }
- .member h4 {
+
+.member h4 {
   font-weight: 700;
   margin-bottom: 10px;
   font-size: 16px;
@@ -931,7 +942,8 @@ section {
   position: relative;
   padding-bottom: 10px;
 }
- .member h4::after {
+
+.member h4::after {
   content: "";
   position: absolute;
   display: block;
@@ -941,29 +953,34 @@ section {
   bottom: 0;
   left: calc(50% - 25px);
 }
- .member span {
+
+.member span {
   font-style: italic;
   display: block;
   font-size: 13px;
   color: #fff;
 }
- .member .social {
+
+.member .social {
   margin-top: 15px;
 }
- .member .social a {
+
+.member .social a {
   transition: color 0.3s;
   color: #fff;
 }
- .member .social a:hover {
+
+.member .social a:hover {
   color: #9eccf4;
 }
- .member .social i {
+
+.member .social i {
   font-size: 16px;
   margin: 0 2px;
 }
 
 @media (max-width: 992px) {
- .member {
+  .member {
     margin-bottom: 100px;
   }
 }
@@ -1445,4 +1462,3 @@ section {
 #footer .credits a {
   color: #9eccf4;
 }
-

@@ -38,22 +38,6 @@
       </div>
     </div>
 
-    <!-- Tracking Box -->
-    <div class="card mb-4 shadow-sm">
-      <div class="card-body bg-light">
-        <h5 class="card-title mb-3"><i class="bi bi-search"></i> Cek Status Laporan</h5>
-        <form action="{{ route('laporan-warga.cek-status') }}" method="POST" class="row g-3">
-          @csrf
-          <div class="col-md-9">
-            <input type="text" name="nomor_laporan" class="form-control" 
-                   placeholder="Masukkan nomor laporan (contoh: LPR-20241215-0001)" required>
-          </div>
-          <div class="col-md-3">
-            <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search"></i> Cek Status</button>
-          </div>
-        </form>
-      </div>
-    </div>
 
     <!-- Kategori Filter -->
     <div class="row mb-4">
@@ -92,7 +76,6 @@
               <span class="badge" style="background-color: {{ $laporan->kategoriLaporan->warna }}">
                 {{ $laporan->kategoriLaporan->nama_kategori }}
               </span>
-              {!! $laporan->status_badge !!}
             </div>
             
             <h5 class="card-title">{{ $laporan->judul_laporan }}</h5>
@@ -116,7 +99,7 @@
               </div>
             </div>
 
-            {!! $laporan->prioritas_badge !!}
+
 
           </div>
           <div class="card-footer bg-transparent border-top-0">

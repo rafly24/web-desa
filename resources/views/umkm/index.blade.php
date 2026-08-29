@@ -11,7 +11,7 @@
             <div class="col-lg-4 col-md-6 mb-3" data-aos="fade-up">
                 <div class="count-box news-card">
                     <div class="card">
-                        <img src="{{ asset('storage/' . $umkm->foto) }}" alt="Foto UMKM" class="card-img-top">
+                        <img src="{{ asset('storage/' . $umkm->foto) }}" alt="Foto UMKM" class="card-img-top" loading="lazy">
                         <div class="card-body">
                             <h5 class="card-title"><b>{{ $umkm->produk }}</b></h5>
                             <p class="card-text"><i class="bi bi-tag"></i>&nbsp; Rp {{ number_format($umkm->harga, 0, ',', '.') }}</p>

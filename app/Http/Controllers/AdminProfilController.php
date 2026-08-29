@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Helpers\StorageSync;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -32,14 +33,9 @@ class AdminProfilController extends Controller
         ]);
 
         if($request->hasFile('foto')){
-            if($user->foto){
-                unlink('.' .Storage::url($user->foto));
-            }
             $path       = 'img-profil/';
             $file       = $request->file('foto');
-            $extension  = $file->getClientOriginalExtension(); 
-            $fileName   = uniqid() . '.' . $extension; 
-            $foto       = $file->storeAs($path, $fileName, 'public');
+            $foto       = StorageSync::updateAndSync($file, $user->foto, $path);
         } else {
             $validator = Validator::make($request->all(), [
                 'name'       => 'required',

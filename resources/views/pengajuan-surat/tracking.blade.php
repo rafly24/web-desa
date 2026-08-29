@@ -28,7 +28,7 @@
               <div class="input-group">
                 <input type="text" name="nomor_pengajuan" class="form-control" 
                        placeholder="Masukkan nomor pengajuan (contoh: PGJ-20241215-0001)" 
-                       value="{{ request('nomor') }}" required>
+                       value="{{ request('nomor') }}" aria-label="Nomor Pengajuan Surat" required>
                 <button type="submit" class="btn btn-primary">
                   <i class="bi bi-search"></i> Cek Status
                 </button>
@@ -92,13 +92,7 @@
             </div>
             @endif
 
-            @if($pengajuan->catatan_admin)
-            <hr>
-            <div class="alert alert-info">
-              <strong><i class="bi bi-info-circle"></i> Catatan Admin:</strong><br>
-              {{ $pengajuan->catatan_admin }}
-            </div>
-            @endif
+
 
             @if($pengajuan->status === 'selesai' && $pengajuan->file_surat_jadi)
             <hr>

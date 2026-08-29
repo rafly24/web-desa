@@ -16,6 +16,9 @@
 <section class="inner-page pt-4">
   <div class="container">
     
+    <!-- Mobile Notification Tips -->
+    @include('partials.mobile-notification-tips')
+    
     <!-- Welcome Card -->
     <div class="card mb-4 shadow">
       <div class="card-body bg-primary text-white">

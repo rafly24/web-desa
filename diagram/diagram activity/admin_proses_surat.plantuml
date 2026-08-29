@@ -1,0 +1,37 @@
+@startuml
+skinparam style strictuml
+skinparam activity {
+  BackgroundColor #F9F9F9
+  BorderColor #333333
+  DiamondBackgroundColor #E8F8F5
+}
+
+|Admin|
+start
+:Memilih Menu Pengajuan Surat;
+|Sistem|
+:Menampilkan Daftar Pengajuan Surat Masuk;
+|Admin|
+:Melihat Data & Klik 'Proses';
+|Sistem|
+:Mengubah Status Menjadi "Diproses";
+:Menampilkan Detail Data Warga & File Syarat\n(KTP, KK, Pendukung);
+|Admin|
+:Melakukan Verifikasi Data Dokumen Pemohon;
+if (Data Valid & Syarat Lengkap?) then (Ya)
+  :Klik Tombol 'Selesai';
+  |Sistem|
+  :Mengubah Status Menjadi "Selesai";
+  :Meng-generate File Surat PDF Otomatis\nBerdasarkan Template;
+  :Menyimpan File PDF ke Direktori Storage;
+else (Tidak)
+  |Admin|
+  :Klik Tombol 'Tolak';
+  |Sistem|
+  :Mengubah Status Menjadi "Ditolak";
+endif
+
+|Sistem|
+:Memperbarui Tampilan Daftar Surat;
+stop
+@enduml

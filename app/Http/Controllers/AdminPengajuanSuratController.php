@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\JenisSurat;
 use App\Models\PengajuanSurat;
+use App\Helpers\StorageSync;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminPengajuanSuratController extends Controller
 {
@@ -39,85 +42,7 @@ class AdminPengajuanSuratController extends Controller
         return view('admin.pengajuan-surat.show', compact('pengajuan'));
     }
 
-    public function updateStatus(Request $request, $id)
-    {
-        $request->validate([
-            'status' => 'required|in:pending,diproses,selesai,ditolak',
-            'nomor_surat' => 'required_if:status,selesai|nullable|string',
-            'catatan_admin' => 'nullable|string',
-        ]);
-
-        $pengajuan = PengajuanSurat::findOrFail($id);
-
-        $data = [
-            'status' => $request->status,
-            'catatan_admin' => $request->catatan_admin,
-            'diproses_oleh' => Auth::id(),
-        ];
-
-        if ($request->status === 'diproses' && $pengajuan->status === 'pending') {
-            $data['tanggal_diproses'] = now();
-        }
-
-        if ($request->status === 'selesai') {
-            // Validasi nomor surat harus diisi
-            if (empty($request->nomor_surat)) {
-                Alert::error('Gagal!', 'Nomor surat harus diisi untuk status selesai');
-                return redirect()->back();
-            }
-
-            $data['nomor_surat'] = $request->nomor_surat;
-            $data['tanggal_selesai'] = now();
-
-            // Auto-generate PDF dari template
-            try {
-                $pdfPath = $this->generateSuratPDF($pengajuan, $request->nomor_surat);
-                $data['file_surat_jadi'] = $pdfPath;
-            } catch (\Exception $e) {
-                Alert::error('Gagal!', 'Gagal generate PDF: ' . $e->getMessage());
-                return redirect()->back();
-            }
-        }
-
-        $pengajuan->update($data);
-
-        Alert::success('Berhasil!', 'Status pengajuan berhasil diperbarui');
-        return redirect()->back();
-    }
-
-    /**
-     * Generate PDF surat dari template
-     */
-    private function generateSuratPDF($pengajuan, $nomor_surat)
-    {
-        $pengajuan->load('jenisSurat');
-        $kode = strtolower($pengajuan->jenisSurat->kode_surat);
-
-        // Cek apakah template tersedia
-        $templatePath = "templates.surat.{$kode}";
-        if (!view()->exists($templatePath)) {
-            throw new \Exception("Template surat untuk {$kode} tidak tersedia");
-        }
-
-        // Render HTML dari template
-        $html = view($templatePath, [
-            'pengajuan' => $pengajuan,
-            'nomor_surat' => $nomor_surat,
-        ])->render();
-
-        // Generate PDF menggunakan dompdf (install: composer require barryvdh/laravel-dompdf)
-        $pdf = \PDF::loadHTML($html)
-            ->setPaper('a4', 'portrait')
-            ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
-
-        // Save PDF
-        $filename = 'surat-' . $pengajuan->nomor_pengajuan . '.pdf';
-        $path = 'surat-jadi/' . $filename;
-        
-        Storage::disk('public')->put($path, $pdf->output());
-
-        return $path;
-    }
+    // generateSuratPDF & updateStatus dihapus sesuai requirement (admin hanya readonly dan PDF digenerate di publik)
 
     public function destroy($id)
     {

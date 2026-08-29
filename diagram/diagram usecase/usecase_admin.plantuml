@@ -1,0 +1,48 @@
+@startuml
+left to right direction
+
+skinparam packageStyle rectangle
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+}
+
+actor "Admin Desa" as admin
+
+rectangle "Sub-Sistem Back-Office Admin" <<subsystem>> {
+    
+    usecase "Login Dasbor Admin" as UC_Login
+    
+    ' Fitur Backoffice
+    usecase "Verifikasi & Proses Surat" as UC_VerifSurat
+    usecase "Verifikasi Laporan Warga" as UC_VerifLapor
+    usecase "Kelola Konten\n(Berita, Slider, UMKM)" as UC_Konten
+    usecase "Kelola Data Master\n(Wilayah, Penduduk, Kategori)" as UC_Master
+    
+    ' Aksi Opsional Saat Verifikasi
+    usecase "Membatalkan / Menolak Data\n& Memberi Catatan" as UC_Tolak
+}
+
+' Relasi Langsung Admin
+admin -- UC_Login
+admin -- UC_VerifSurat
+admin -- UC_VerifLapor
+admin -- UC_Konten
+admin -- UC_Master
+
+' Relasi Wajib (Include): Admin wajib masuk dasbor
+UC_VerifSurat ..> UC_Login : <<include>>
+UC_VerifLapor ..> UC_Login : <<include>>
+UC_Konten ..> UC_Login : <<include>>
+UC_Master ..> UC_Login : <<include>>
+
+' Relasi Opsional (Extend): Opsi fitur penolakan
+' Arah kode dibalik (<..) agar posisi Use Case tetap di dalam kotak (kanan)
+UC_VerifSurat <.. UC_Tolak : <<extend>>
+UC_VerifLapor <.. UC_Tolak : <<extend>>
+
+@enduml

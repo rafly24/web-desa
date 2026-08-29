@@ -1,21 +1,40 @@
 {
-    "name": "Website Portal Desa",
+    "name": "Website Portal Desa Cibuni",
     "short_name": "Portal Desa",
-    "start_url": "./",
-    "scope": "./",
+    "description": "Aplikasi Portal Desa untuk informasi dan layanan desa",
+    "start_url": "/",
+    "scope": "/",
     "display": "standalone",
+    "orientation": "portrait",
     "background_color": "#ffffff",
     "theme_color": "#0d6efd",
+    "prefer_related_applications": false,
     "icons": [
         {
-            "src": "assets/img/favicon.png",
+            "src": "/assets/img/pwa-icon-192.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         },
         {
-            "src": "assets/img/apple-touch-icon.png",
-            "sizes": "180x180",
-            "type": "image/png"
+            "src": "/assets/img/pwa-icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["government", "utilities"],
+    "screenshots": [],
+    "shortcuts": [
+        {
+            "name": "Dashboard",
+            "url": "/warga/dashboard",
+            "description": "Buka Dashboard Warga"
+        },
+        {
+            "name": "Pengajuan Surat",
+            "url": "/pengajuan-surat/create",
+            "description": "Buat Pengajuan Surat Baru"
         }
     ]
 }

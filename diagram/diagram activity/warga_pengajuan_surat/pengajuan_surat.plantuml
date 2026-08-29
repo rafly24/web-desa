@@ -1,0 +1,54 @@
+@startuml
+title Activity Diagram - Warga Mengajukan Surat
+
+|Warga|
+start
+:Membuka Situs Web Desa;
+
+|Sistem|
+:Menampilkan Halaman Beranda;
+
+|Warga|
+:Memilih Menu Pengajuan Surat;
+
+|Sistem|
+:Menampilkan Halaman Pengajuan Surat
+dengan Daftar Jenis Surat;
+
+|Warga|
+:Memilih Jenis Surat yang Diajukan;
+
+|Sistem|
+:Menampilkan Form Pengajuan Surat
+(nama, NIK, alamat, keperluan,
+upload KTP, upload KK, upload file pendukung);
+
+|Warga|
+:Mengisi Data Diri pada Form;
+:Mengunggah File KTP;
+:Mengunggah File KK;
+:Mengunggah File Pendukung (opsional);
+:Menekan Tombol Ajukan;
+
+|Sistem|
+if (Validasi Data?) then (Valid)
+    :Menyimpan Data Pengajuan ke Database;
+    :Men-generate Nomor Pengajuan Otomatis;
+    :Menampilkan Notifikasi Sukses
+    beserta Nomor Pengajuan;
+else (Tidak Valid)
+    :Menampilkan Pesan Error;
+    |Warga|
+    :Memperbaiki Isian Form;
+    :Menekan Tombol Ajukan;
+    |Sistem|
+    :Menyimpan Data Pengajuan ke Database;
+    :Men-generate Nomor Pengajuan Otomatis;
+    :Menampilkan Notifikasi Sukses;
+endif
+
+|Warga|
+:Mencatat Nomor Pengajuan untuk Pelacakan;
+
+stop
+@enduml

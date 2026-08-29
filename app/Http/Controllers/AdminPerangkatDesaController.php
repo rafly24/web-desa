@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helpers\StorageSync;
 use App\Models\PerangkatDesa;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Cache\Store;
@@ -49,9 +50,7 @@ class AdminPerangkatDesaController extends Controller
         if($request->hasFile('foto')){
             $path       = 'img-perangkat/';
             $file       = $request->file('foto');
-            $extension  = $file->getClientOriginalExtension();
-            $fileName   = uniqid(). '.' . $extension;
-            $foto       = $file->storeAs($path, $fileName, 'public');
+            $foto       = StorageSync::storeAndSync($file, $path);
         } else {
             $foto       = null;
         }
@@ -65,7 +64,7 @@ class AdminPerangkatDesaController extends Controller
         $perangkatDesa = PerangkatDesa::create([
             'nama'      => $request->nama,
             'jabatan'   => $request->jabatan,
-            'foto'      => $path . $fileName,
+            'foto'      => $foto,
             'user_id'   => auth()->user()->id
         ]);
 
@@ -97,14 +96,9 @@ class AdminPerangkatDesaController extends Controller
         ]);
 
         if($request->hasFile('foto')){
-            if($perangkatDesa->foto){
-                unlink('.' .Storage::url($perangkatDesa->foto));
-            }
             $path       = 'img-perangkat/';
             $file       = $request->file('foto');
-            $extension  = $file->getClientOriginalExtension(); 
-            $fileName   = uniqid() . '.' . $extension; 
-            $foto       = $file->storeAs($path, $fileName, 'public');
+            $foto       = StorageSync::updateAndSync($file, $perangkatDesa->foto, $path);
         } else {
             $validator = Validator::make($request->all(), [
                 'nama'      => 'required',
@@ -139,7 +133,7 @@ class AdminPerangkatDesaController extends Controller
      */
     public function destroy(PerangkatDesa $perangkatDesa)
     {
-        unlink('.'.Storage::url($perangkatDesa->foto));
+        StorageSync::deleteAndSync($perangkatDesa->foto);
         $perangkatDesa->delete();
 
         return redirect('/admin/perangkat-desa')->with('success', 'Berhasil menghapus data perangkat desa');

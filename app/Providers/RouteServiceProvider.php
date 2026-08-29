@@ -35,6 +35,12 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+
+            // Debug routes (HAPUS DI PRODUCTION!)
+            if (file_exists(base_path('routes/web-debug.php'))) {
+                Route::middleware('web')
+                    ->group(base_path('routes/web-debug.php'));
+            }
         });
     }
 }

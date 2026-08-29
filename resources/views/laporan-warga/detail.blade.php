@@ -27,7 +27,6 @@
               <span class="badge" style="background-color: {{ $laporan->kategoriLaporan->warna }}; font-size: 0.9rem;">
                 <i class="bi bi-tag"></i> {{ $laporan->kategoriLaporan->nama_kategori }}
               </span>
-              {!! $laporan->status_badge !!}
             </div>
 
             <h3 class="mb-3">{{ $laporan->judul_laporan }}</h3>
@@ -47,7 +46,7 @@
               </div>
             </div>
 
-            {!! $laporan->prioritas_badge !!}
+
 
             <hr>
 
@@ -68,32 +67,7 @@
             </div>
             @endif
 
-            @if($laporan->tanggapan_admin)
-            <hr>
-            <div class="alert alert-success">
-              <h5><i class="bi bi-check-circle"></i> Tanggapan Admin</h5>
-              <p class="mb-0" style="white-space: pre-line;">{{ $laporan->tanggapan_admin }}</p>
-              
-              @if($laporan->tanggal_ditanggapi)
-              <small class="text-muted d-block mt-2">
-                <i class="bi bi-calendar"></i> {{ $laporan->tanggal_ditanggapi->format('d F Y H:i') }}
-              </small>
-              @endif
 
-              @if($laporan->admin)
-              <small class="text-muted">
-                <i class="bi bi-person"></i> Ditangani oleh: {{ $laporan->admin->name }}
-              </small>
-              @endif
-            </div>
-
-            @if($laporan->foto_tindak_lanjut)
-            <h6>Foto Tindak Lanjut</h6>
-            <a href="{{ asset('storage/' . $laporan->foto_tindak_lanjut) }}" target="_blank">
-              <img src="{{ asset('storage/' . $laporan->foto_tindak_lanjut) }}" class="img-fluid rounded shadow-sm" alt="Foto Tindak Lanjut" style="max-height: 300px;">
-            </a>
-            @endif
-            @endif
 
           </div>
         </div>
@@ -113,24 +87,9 @@
                 <td><strong>Nomor Laporan</strong></td>
                 <td>{{ $laporan->nomor_laporan }}</td>
               </tr>
-              <tr>
-                <td><strong>Status</strong></td>
-                <td>{!! $laporan->status_badge !!}</td>
-              </tr>
-              <tr>
-                <td><strong>Prioritas</strong></td>
-                <td>{!! $laporan->prioritas_badge !!}</td>
-              </tr>
-              <tr>
-                <td><strong>Tanggal Kejadian</strong></td>
-                <td>{{ $laporan->tanggal_kejadian->format('d F Y') }}</td>
-              </tr>
-              @if($laporan->tanggal_selesai)
-              <tr>
-                <td><strong>Tanggal Selesai</strong></td>
-                <td>{{ $laporan->tanggal_selesai->format('d F Y') }}</td>
-              </tr>
-              @endif
+
+
+
             </table>
           </div>
         </div>

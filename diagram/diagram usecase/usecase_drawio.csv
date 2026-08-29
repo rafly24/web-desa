@@ -1,0 +1,26 @@
+## Draw.io CSV Import
+## Copy all this text and paste it into Draw.io via: Arrange -> Insert -> Advanced -> CSV...
+# labelName: label
+# style: style
+# connect: {"from": "actor", "to": "id", "style": "endArrow=none;"}
+# connect: {"from": "id", "to": "includes", "label": "<<include>>", "style": "dashed=1;endArrow=open;endFill=0;"}
+# width: 160
+# height: 60
+# padding: 5
+# ignoreComma: true
+#
+id,label,actor,includes,style
+warga,Warga Publik,,,shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;width=30;height=60;
+admin,Admin Desa,,,shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;width=30;height=60;
+
+login,Melakukan Login,,,shape=ellipse;whiteSpace=wrap;html=1;
+
+info,Melihat Informasi Publik,warga,,shape=ellipse;whiteSpace=wrap;html=1;
+surat,Melakukan Pengajuan Surat,warga,login,shape=ellipse;whiteSpace=wrap;html=1;
+lapor,Membuat Laporan Warga,warga,login,shape=ellipse;whiteSpace=wrap;html=1;
+
+profil,Kelola Profil Desa,admin,login,shape=ellipse;whiteSpace=wrap;html=1;
+konten,Kelola Info & Konten,admin,login,shape=ellipse;whiteSpace=wrap;html=1;
+master,Kelola Data Master & Konten,admin,login,shape=ellipse;whiteSpace=wrap;html=1;
+layanan,Pelayanan Publik,admin,login,shape=ellipse;whiteSpace=wrap;html=1;
+sistem,Pengaturan Sistem,admin,login,shape=ellipse;whiteSpace=wrap;html=1;

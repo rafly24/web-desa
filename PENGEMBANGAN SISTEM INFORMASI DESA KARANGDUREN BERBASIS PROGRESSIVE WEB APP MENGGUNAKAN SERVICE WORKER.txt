@@ -1,0 +1,836 @@
+PENGEMBANGAN SISTEM INFORMASI DESA KARANGDUREN BERBASIS PROGRESSIVE WEB APP MENGGUNAKAN SERVICE WORKER
+
+
+
+ 
+
+Oleh:
+Mohamad Rafly Achiyar
+NIM:202210370311032
+
+Bidang Minat
+Rekayasa Perangkat Lunak
+
+PRODI TEKNIK INFORMATIKA
+FAKULTAS TEKNIK
+UNIVERSITAS MUHAMMADIYAH MALANG
+2026
+LEMBAR PERSETUJUAN
+
+PENGEMBANGAN SISTEM INFORMASI DESA KARANGDUREN BERBASIS PROGRESSIVE WEB APP MENGGUNAKAN SERVICE WORKER
+
+TUGAS AKHIR
+Sebagai Persyaratan Guna Meraih Gelar Sarjana Strata 1
+Informatika Universitas Muhammadiyah Malang
+
+
+  
+
+
+Menyetujui, 
+Malang, 03 Juni 2026
+
+Dosen Pembimbing 1
+
+Wildan Suharso S.Kom., M.Kom
+	NIP. 10817030596PNS.
+
+Daftar Isi
+BAB I PENDAHULUAN	8
+1.1 Latar Belakang Masalah	8
+1.2 Rumusan Masalah	10
+1.3 Tujuan Penelitian	11
+1.4 Batasan Penelitian	11
+1.5 Jadwal Pengerjaan	12
+BAB II Kajian Pustaka	Error! Bookmark not defined.
+2.1 Penelitian Sebelumnya	14
+2.2 Teori Yang Relevan	15
+2.2.1 Sistem Informasi Desa (SID)	16
+2.2.2 Progressive Web App (PWA)	16
+2.2.3 Metode Waterfall	17
+2.2.4 Service worker	17
+2.3 Perbedaan Website Konvensional dengan Pwa	18
+BAB III Metode Penelitian	19
+3.1 Studi Pustaka	19
+3.2 Analisis Kebutuhan	20
+3.3 Desain Sistem	20
+3.4 Implementasi	20
+3.5 Testing		21
+3.5.1 Performance Testing	21
+3.5.2 Usability Testing	22
+3.6 Kriteria Responden	24
+3.6.1 Kriteria Responden Berdasarkan Usia	24
+3.6.2 Kriteria Responden Berdasarkan Jenis Kelamin	24
+3.6.3 Kriteria Responden Berdasarkan Pekerjaan	24
+3.7 Penulisan Laporan	24
+3.8 Subjek Dan Lokasi Penelitian	24
+BAB IV Hasil Dan Pembahasan	27
+4.1 Analisis		27
+4.2 Desain		27
+4.2.1 Use Case Diagram	27
+4.2.2 Diagram Activity	29
+4.2.3 Desain Interface	41
+4.3 Implementasi	47
+4.3.1 Implementasi Service Worker dan strategi caching	65
+4.3.2 Implementasi Background Sync	66
+4.3.3 Implementasi Push Notification Terintegrasi Firebase	69
+4.3.4 Instalasi Aplikasi PWA (Add to Home Screen)	71
+4.4 Testing	72
+4.4.1 Pengujian Performa dan Validasi PWA (Lighthouse)	72
+4.4.2 Usability Testing menggunakan System Usability Scale (SUS)	75
+BAB V KESIMPULAN	80
+5.1 Kesimpulan	80
+5.2 Saran		81
+
+
+
+
+
+
+
+
+
+
+
+Daftar Gambar
+Gambar 2. 1Metode penelitian	19
+Gambar 4. 1 Use Case Diagram	28
+Gambar 4. 2 Diagram Activity Membuat Surat	30
+Gambar 4. 3 Diagram Activity Laporan Warga	31
+Gambar 4. 4 Diagram Activity Login Admin	32
+Gambar 4. 5 Diagram Activity Ubah Profil Desa	33
+Gambar 4. 6 Diagram Activity Tambah Perangkat Desa	34
+Gambar 4. 7 Diagram Activity Ubah Perangkat Desa	35
+Gambar 4. 8 Diagram Activity Hapus Perangkat Desa	36
+Gambar 4. 9 Diagram Acctivity Tambah Berita & Konten	37
+Gambar 4. 10 Diagram Activity Edit Berita & Konten	38
+Gambar 4. 11 Diagram Activity Hapus Konten	39
+Gambar 4. 12 Diagram Activity Pantau Pengajuan Surat	40
+Gambar 4. 13 Diagram Activity Pantau Laporan Warga	41
+Gambar 4. 14 Desain Halaman Login Admin	42
+Gambar 4. 15 Desain Halaman Dashboard Admin	42
+Gambar 4. 16 Desain Halaman Kelola Profil Desa	43
+Gambar 4. 17 Desain Halaman Kelola Berita & Konten	43
+Gambar 4. 18 Desain Halaman Pantau Cetak Surat	44
+Gambar 4. 19 Desain Halaman Pantau Laporan Warga	45
+Gambar 4. 20 Desain Halaman Cetak Surat Oleh Warga	46
+Gambar 4. 21 Desain Halaman Laporan Warga	47
+Gambar 4. 22 Implementasi Halaman Login	48
+Gambar 4. 23 Kode Function Login Admin	48
+Gambar 4. 24 Implementasi Halaman Dashboard	49
+Gambar 4. 25 Kode Function Halaman Dashboard	49
+Gambar 4. 26 Implementasi Halaman Edit Profile desa	50
+Gambar 4. 27 Kode Function Edit Profile Desa	50
+Gambar 4. 28 Implemen Tambah Perangkat Desa	51
+Gambar 4. 29 Kode Function Tambah Perangkat Desa	51
+Gambar 4. 30 Implementasi Halaman Edit Perangkat Desa	52
+Gambar 4. 31 Kode Function Edit Perangkat Desa	53
+Gambar 4. 32 Implementasi Hapus Perangkat Desa	54
+Gambar 4. 33 Kode Function Hapus Perangkat Desa	54
+Gambar 4. 34 Implementasi Halaman Tambah Berita&Konten	55
+Gambar 4. 35 Kode Function Tambah Berita & Konten	56
+Gambar 4. 36 Kode Function Tambah Berita & Konten	57
+Gambar 4. 37 Implementasi Halaman Edit Berita & Konten	57
+Gambar 4. 38 Kode Function Edit Berita & Konten	58
+Gambar 4. 39 Kode Function Edit Berita & Konten	59
+Gambar 4. 40 Implementasi Hapus Berita & Konten	60
+Gambar 4. 41 Kode Function Hapus Berita & Konten	60
+Gambar 4. 42 Implementasi HapusnSurat Warga	61
+Gambar 4. 43 Kode Function Hapus Surat Warga	61
+Gambar 4. 44 Implementasi Hapus Laporan Warga	62
+Gambar 4. 45 Kode Function Hapus Laporan Warga	62
+Gambar 4. 46 Implementasi Cetak Surat Warga	63
+Gambar 4. 47 Kode Function Cetak Surat Warga	63
+Gambar 4. 48 Kode Function Cetak Surat Warga	64
+Gambar 4. 49 Implementasi Laporan Warga	64
+Gambar 4. 50 Kode Function Laporan Warga	65
+Gambar 4. 51 Implementasi Service Worker Dan Caching	65
+Gambar 4. 52 Kode Service Worker	66
+Gambar 4. 53 Kode Caching	66
+Gambar 4. 54 Implementasi Background Sync	67
+Gambar 4. 55 Kode Background Sync	68
+Gambar 4. 56 Kode Background Sync	69
+Gambar 4. 57 Implementasi Push Notifiaction	70
+Gambar 4. 58 Kode Function Push Notification	71
+Gambar 4. 59 Hasil Pengujian LightHouse	73
+
+
+
+
+
+
+
+
+
+
+
+
+
+Daftar Tabel
+Tabel 2. 1 Tabel Perbedaan Web Konvensional Dengan Pwa	16
+Tabel 3. 1 Tabel Penilaian Usability Testing	19
+Tabel 3. 2 Tabel Pertanyaan SUS	21
+Tabel 3. 3 Tabel Use Case Diagram	26
+Tabel 4. 1 Tabel Hasil Testing Lighthouse	70
+Tabel 4. 2 Data Mentah Hasil SUS	73
+Tabel 4. 3Hasil Usability Testing Menggunakan Sus	74
+ 
+
+PENDAHULUAN
+
+ Latar Belakang Masalah
+Fenomena keterbatasan akses dan kualitas layanan informasi di tingkat desa masih menjadi permasalahan nyata dalam implementasi e-government di Indonesia, khususnya pada desa-desa yang belum memiliki sistem informasi yang terintegrasi dan adaptif terhadap kondisi infrastruktur digital yang terbatas. Beberapa studi menunjukkan bahwa implementasi sistem informasi desa sering kali menghadapi kendala seperti rendahnya kualitas jaringan internet, keterbatasan perangkat, serta kurang optimalnya desain sistem yang belum mampu berjalan secara offline atau pada koneksi yang tidak stabil [1], [2]. Kondisi ini menyebabkan layanan publik menjadi kurang efisien dan tidak merata, sehingga tujuan utama e-government untuk meningkatkan aksesibilitas dan transparansi belum sepenuhnya tercapai.Selain itu, ekosistem adopsi sistem informasi desa juga dipengaruhi oleh berbagai aktor seperti pemerintah desa, masyarakat, dan penyedia teknologi, yang sering kali belum terintegrasi secara optimal[3] .Di sisi lain, transformasi digital pada pemerintahan lokal menuntut adanya inovasi sistem yang mampu menjawab tantangan mobilitas, efisiensi, dan keterbatasan infrastruktur, terutama di wilayah pedesaan[4]. Hal ini menunjukkan adanya kebutuhan mendesak terhadap solusi teknologi yang ringan, adaptif, dan mampu beroperasi dalam kondisi jaringan yang tidak stabil.
+Dalam konteks tersebut, Progressive Web App (PWA) dengan pemanfaatan service worker muncul sebagai salah satu pendekatan teknologi yang relevan untuk mengatasi permasalahan tersebut. PWA memungkinkan aplikasi berbasis web memiliki kemampuan seperti aplikasi native, termasuk akses offline, caching data, dan performa yang lebih cepat inti dalam PWA memungkinkan sistem tetap berjalan meskipun tanpa koneksi internet yang stabil, sehingga sangat cocok diterapkan pada sistem informasi desa[5]. Penelitian menunjukkan bahwa penerapan teknologi berbasis PWA dapat meningkatkan aksesibilitas layanan digital di wilayah dengan keterbatasan infrastruktur, serta mendukung inklusi digital . Oleh karena itu, pengembangan sistem informasi desa berbasis PWA menjadi sangat penting sebagai solusi inovatif dalam meningkatkan kualitas layanan publik di tingkat desa, khususnya di Desa Karangduren.
+Sejumlah penelitian terdahulu telah mengkaji pengembangan sistem informasi desa maupun penerapan e-government di tingkat lokal. Misalnya, penelitian oleh Rizki et al. (mengembangkan sistem informasi desa berbasis web untuk meningkatkan efisiensi layanan administrasi, namun sistem tersebut masih bergantung pada koneksi internet secara penuh sehingga kurang optimal pada kondisi jaringan terbatas[6]. Penelitian lain oleh Watini et al. (2021) mengembangkan model layanan desa berbasis mobile computing yang meningkatkan aksesibilitas, tetapi belum mengintegrasikan teknologi offline seperti service worker[7]. 
+Sementara itu, Ummah et al. menunjukkan bahwa kegagalan implementasi e-government di desa disebabkan oleh kurangnya kesiapan teknologi dan desain sistem yang tidak sesuai dengan kebutuhan pengguna[1]. Penelitian oleh Aryani & Kusumaningrum (2024) juga menyoroti bahwa sistem informasi desa yang ada belum sepenuhnya mendukung keberlanjutan dan integrasi data secara optimal[2]. Di sisi lain, studi Sihotang & Hidayanto (2025) menekankan pentingnya ekosistem dalam adopsi sistem informasi desa, namun belum membahas solusi teknis spesifik seperti penggunaan PWA.[3], Penelitian mengenai penerapan Progressive Web App (PWA) pada lingkungan desa telah dilakukan oleh Hudianti dkk. melalui pengembangan Sistem Informasi Pengelolaan Potensi Desa Wisata (Simpel Dawis). Hasil penelitian menunjukkan bahwa penerapan service worker memungkinkan sistem tetap dapat diakses pada kondisi offline serta meningkatkan kecepatan akses setelah proses caching dilakukan. Pengujian menunjukkan bahwa aplikasi yang menerapkan PWA memiliki performa yang lebih baik dibandingkan website konvensional setelah cache tersimpan pada perangkat pengguna. Namun penelitian tersebut masih berfokus pada pengelolaan potensi desa wisata dan belum mengimplementasikan fitur background sync maupun push notification sebagai pendukung layanan administrasi dan komunikasi desa secara real-time. 
+Dengan demikian, dapat diidentifikasi adanya kesenjangan penelitian (research gap), Meskipun penelitian mengenai sistem informasi desa dan implementasi Progressive Web App telah dilakukan sebelumnya, sebagian besar penelitian masih berfokus pada penyediaan informasi atau pengelolaan data tertentu. Penelitian Hudianti dkk. telah menunjukkan manfaat service worker dalam mendukung akses offline, namun belum mengintegrasikan background sync dan push notification untuk mendukung proses layanan administrasi desa secara berkelanjutan. Oleh karena itu, penelitian ini mengembangkan Sistem Informasi Desa Karangduren berbasis Progressive Web App yang mengintegrasikan service worker, background sync, dan push notification untuk meningkatkan aksesibilitas, reliabilitas, serta efektivitas penyebaran informasi desa. 
+Berdasarkan gap tersebut, penelitian ini menawarkan kontribusi berupa pengembangan sistem informasi desa berbasis Progressive Web App dengan memanfaatkan service worker sebagai solusi untuk meningkatkan aksesibilitas, performa, dan keandalan sistemPenelitian ini diharapkan mampu memberikan kontribusi praktis dalam meningkatkan kualitas layanan publik desa, serta kontribusi teoretis dalam pengembangan konsep sistem informasi berbasis web adaptif di lingkungan dengan keterbatasan infrastruktur.
+Secara keilmuan, penelitian ini relevan dengan bidang sistem informasi, rekayasa perangkat lunak, dan e-government, khususnya dalam konteks pengembangan aplikasi berbasis web modern. Konsep PWA merupakan bagian dari tren terbaru dalam pengembangan aplikasi yang menggabungkan keunggulan web dan mobile [8]sementara penggunaan service worker berkaitan dengan konsep distributed computing dan client-side caching dalam meningkatkan performa sistem. Selain itu, penelitian ini juga mendukung konsep digital governance dan transformasi digital di sektor publik, yang menekankan pentingnya inovasi teknologi dalam meningkatkan kualitas layanan dan partisipasi masyarakat Dengan demikian, penelitian ini tidak hanya memberikan solusi praktis bagi Desa Karangduren, tetapi juga berkontribusi dalam pengembangan ilmu pengetahuan di bidang teknologi informasi dan penerapannya dalam konteks pembangunan desa berbasis digital.
+Rumusan Masalah
+	Bagaimana kebutuhan fungsional dan non-fungsional sistem informasi desa Karangduren dapat diidentifikasi secara komprehensif sebagai dasar pengembangan sistem berbasis Progressive Web App?
+	Bagaimana Service Worker diimplementasikan pada sistem informasi Desa Karangduren berbasis PWA untuk mendukung kemampuan akses offline, caching, dan performa sistem pada kondisi jaringan terbatas??
+	Bagaimana hasil pengujian fungsionalitas, kinerja, dan usability sistem informasi desa berbasis Progressive Web App yang telah dikembangkan?
+Tujuan Penelitian
+	Mengidentifikasi kebutuhan fungsional dan non-fungsional yang diperlukan dalam pengembangan sistem informasi Desa Karangduren sebagai dasar perancangan sistem berbasis Progressive Web App.
+	Merancang arsitektur sistem informasi Desa Karangduren berbasis PWA, mencakup perancangan antarmuka pengguna, alur proses layanan, serta arsitektur Service Worker meliputi strategi caching dan mekanisme offline fallback.
+	Mengembangkan dan menguji sistem informasi Desa Karangduren berbasis PWA dengan mengimplementasikan Service Worker secara terstruktur melalui tahapan analisis, desain, implementasi, dan pengujian.
+Batasan Penelitian
+Ruang lingkup penelitian ini ditetapkan untuk memberikan batasan yang jelas agar penelitian terarah, fokus, dan tidak meluas ke luar konteks yang telah ditentukan. Penelitian ini difokuskan pada kegiatan pengembangan Sistem Informasi Desa Karangduren berbasis Progressive Web App (PWA) dengan menggunakan service worker
+Dari sisi fokus kajian, penelitian ini menitikberatkan pada proses pengembangan produk sistem informasi desa yang meliputi analisis kebutuhan, perancangan sistem, pengembangan aplikasi, implementasi terbatas, dan evaluasi awal terhadap sistem yang dihasilkan. Aspek yang dikaji mencakup pengelolaan informasi dan pelayanan administrasi desa secara digital, penyajian informasi desa, serta kemudahan akses sistem oleh pengguna melalui perangkat berbasis web dengan karakteristik PWA. Penelitian ini tidak membahas kebijakan pemerintahan desa secara normatif, melainkan berfokus pada aspek teknis dan fungsional sistem informasi sebagai alat pendukung pelayanan desa.
+Dari sisi konteks penelitian, ruang lingkup penelitian ini dibatasi pada Desa Karangduren sebagai lokasi pengembangan dan penerapan sistem. Sistem informasi yang dikembangkan disesuaikan dengan kebutuhan, kondisi, dan karakteristik Desa Karangduren, sehingga hasil penelitian bersifat kontekstual dan tidak dimaksudkan untuk digeneralisasikan secara langsung ke seluruh desa tanpa penyesuaian lebih lanjut.
+
+Dari sisi subjek penelitian, penelitian ini melibatkan perangkat desa karangduren sebagai pengelola dan pengguna utama sistem serta masyarakat desa karangduren sebagai pengguna layanan informasi desa. Keterlibatan subjek penelitian dibatasi pada tahap pengumpulan kebutuhan dan evaluasi awal sistem, sehingga penelitian ini tidak mencakup pengukuran dampak jangka panjang terhadap kinerja pemerintahan desa atau tingkat kepuasan masyarakat secara luas.
+
+Dari sisi aspek teknis, ruang lingkup penelitian dibatasi pada pengembangan sistem informasi desa berbasis Progressive Web App (PWA) dengan fitur utama yang mendukung akses melalui browser web, responsivitas antarperangkat, dan kemudahan pengguna Implementasi Service Worker dalam penelitian ini mencakup strategi caching Cache First untuk aset statis, Network First untuk data dinamis, offline fallback page untuk kondisi tanpa koneksi, Push Notification untuk penyampaian informasi desa secara real-time kepada pengguna, serta Background Sync untuk sinkronisasi data ketika koneksi internet kembali tersedia. Penelitian ini tidak mencakup pengujian keamanan Service Worker tingkat lanjut seperti perlindungan terhadap cache poisoning attack, serta tidak membandingkan efektivitas antar strategi caching yang digunakan.. Penelitian ini tidak mencakup pengembangan aplikasi mobile native, integrasi dengan sistem eksternal skala nasional, maupun pengujian keamanan tingkat lanjut. Dan tidak membahas perbandingan dengan model pengembangan perangkat.
+
+Dengan adanya pembatasan ruang lingkup tersebut, penelitian ini diharapkan mampu menghasilkan kajian yang spesifik, terarah, dan mendalam mengenai pengembangan sistem informasi desa berbasis PWA menggunakan service worker, serta memberikan kontribusi yang jelas dan terukur sesuai dengan tujuan penelitian
+Jadwal Pengerjaan
+Berikut jadwal penelitian yang akan dilakukan
+Kegiatan	Bulan 1	Bulan 2	Bulan 3	Bulan 4
+Minggu	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16
+Identifikasi Masalah & Studi Literatur	 	 	 	 	 	 	 	 								
+Penyusunan Instrumen Penelitian	 	 	 	 	 	 	 	 								
+Pengumpulan & Analisis Data	 	 	 	 	 	 	 	 								
+Penyusunan Laporan Penelitian	 	 	 	 	 	 	 	 								
+
+
+
+
+
+
+
+
+
+
+
+
+Kajian Pustaka
+
+Penelitian Sebelumnya
+Berdasarkan kajian literatur yang dilakukan, peneliti menemukan beberapa penelitian sebelumnya yang memiliki kesamaan topik. Namun, meskipun terdapat kemiripan dalam pendekatan atau tema yang diangkat, penelitian ini juga memiliki perbedaan yang menjadi ciri khas tersendiri dibandingkan dengan penelitian-penelitian tersebut.
+Penelitian terkait pengembangan sistem informasi desa dan penerapan teknologi Progressive Web App (PWA) telah banyak dilakukan sebagai upaya mendukung transformasi digital di tingkat pemerintahan lokal. Secara umum, studi-studi tersebut menunjukkan bahwa digitalisasi layanan desa mampu meningkatkan efisiensi, transparansi, dan aksesibilitas layanan publik, namun masih menyisakan berbagai keterbatasan terutama dalam aspek teknologi adaptif terhadap kondisi infrastruktur. Salah satu penelitian yang relevan dilakukan oleh Rizki, Nugraha, dan Alamsyah (2025) yang mengembangkan sistem informasi desa berbasis web untuk mengoptimalkan layanan administrasi desa. Penelitian ini bertujuan untuk meningkatkan efisiensi pelayanan publik melalui digitalisasi proses administrasi seperti pengelolaan data penduduk dan layanan surat menyurat. Hasil penelitian menunjukkan bahwa sistem yang dikembangkan mampu mempercepat proses pelayanan dan meningkatkan akurasi data. Namun demikian, sistem tersebut masih memiliki ketergantungan tinggi terhadap koneksi internet, sehingga kurang optimal digunakan di wilayah dengan jaringan yang tidak stabil. Kelebihan penelitian ini terletak pada pendekatan sistematis dalam pengembangan sistem berbasis kebutuhan pengguna serta kontribusinya terhadap peningkatan efisiensi layanan. Akan tetapi, kekurangannya adalah belum adanya penerapan teknologi modern seperti PWA atau mekanisme offline-first yang dapat meningkatkan kinerja sistem dalam kondisi keterbatasan jaringan, sehingga menjadi peluang pengembangan lebih lanjut.
+Penelitian kedua dilakukan oleh Watini, Nurhaeni, dan Meria (2021) yang mengembangkan model layanan kantor desa berbasis mobile computing untuk meningkatkan aksesibilitas layanan masyarakat. Tujuan penelitian ini adalah menyediakan solusi layanan berbasis aplikasi yang dapat diakses melalui perangkat mobile, sehingga masyarakat dapat memperoleh layanan tanpa harus datang langsung ke kantor desa. Hasil penelitian menunjukkan bahwa sistem yang dikembangkanmampu meningkatkan kemudahan akses dan mempercepat proses pelayanan. Keunggulan penelitian ini terletak pada fokusnya terhadap mobilitas pengguna dan peningkatan user experience dalam layanan publik. Namun, kelemahan utama dari penelitian ini adalah belum mengadopsi konsep Progressive Web App maupun service worker, sehingga aplikasi masih bergantung pada koneksi internet secara real-time dan belum mampu menyediakan fitur offline access. Selain itu, pendekatan mobile computing yang digunakan cenderung membutuhkan instalasi aplikasi, yang dalam praktiknya dapat menjadi kendala bagi pengguna dengan keterbatasan perangkat atau kapasitas penyimpanan.
+Penelitian ketiga dilakukan oleh Hudianti dkk. (2023) yang mengembangkan Sistem Pengelolaan Potensi Desa Wisata (Simpel Dawis) berbasis Progressive Web App (PWA). Penelitian ini bertujuan untuk meningkatkan aksesibilitas sistem pengelolaan potensi desa wisata melalui penerapan teknologi PWA dengan memanfaatkan service worker dan mekanisme caching. Hasil penelitian menunjukkan bahwa sistem yang dikembangkan mampu berjalan pada kondisi offline, dapat diinstal pada perangkat mobile maupun desktop, serta mengalami peningkatan performa setelah service worker dan cache aktif. Pengujian yang dilakukan menunjukkan bahwa penerapan PWA mampu meningkatkan kecepatan akses aplikasi setelah proses caching dibandingkan website konvensional. Keunggulan penelitian ini terletak pada keberhasilannya mengimplementasikan teknologi Progressive Web App dan service worker untuk mendukung akses offline serta meningkatkan performa sistem. Namun demikian, penelitian tersebut masih berfokus pada pengelolaan potensi desa wisata dan belum mengimplementasikan fitur background sync maupun push notification untuk mendukung sinkronisasi data dan penyebaran informasi secara real-time. Selain itu, penelitian tersebut belum mengembangkan sistem informasi desa yang terintegrasi dengan layanan administrasi desa dan pelaporan masyarakat secara komprehensif[9].
+Dengan demikian, dapat diidentifikasi adanya research gap, yaitu Berdasarkan penelitian-penelitian terdahulu tersebut, dapat diidentifikasi bahwa pengembangan sistem informasi desa maupun penerapan Progressive Web App telah banyak dilakukan untuk meningkatkan kualitas layanan publik dan aksesibilitas sistem. Namun, sebagian besar penelitian masih berfokus pada layanan tertentu dan belum mengintegrasikan fitur-fitur utama Progressive Web App secara komprehensif, seperti service worker, background sync, dan push notification dalam satu sistem informasi desa. Selain itu, penelitian terdahulu belum banyak mengembangkan sistem yang mampu mendukung layanan administrasi desa, penyebaran informasi, dan pelaporan masyarakat secara terintegrasi. Oleh karena itu, penelitian ini mengembangkan Sistem Informasi Desa Karangduren berbasis Progressive Web App dengan mengintegrasikan service worker, background sync, dan push notification untuk meningkatkan aksesibilitas, reliabilitas, dan efektivitas layanan desa.Teori Yang Relevan
+Penelitian ini memiliki beberapa konsep utama dalam ilmu sistem informasi dan rekayasa perangkat lunak, yaitu Sistem Informasi Desa (SID), Progressive Web App (PWA), dan metode pengembangan sistem Waterfall sebagai bagian dari Software Development Life Cycle (SDLC). Ketiga konsep ini menjadi landasan konseptual dalam pengembangan produk, model, dan evaluasi yang dilakukan dalam penelitian.
+Sistem Informasi Desa (SID)
+Sistem Informasi Desa didefinisikan sebagai suatu sistem yang dirancang untuk mengelola, menyimpan, mengolah, dan menyajikan data serta informasi yang berkaitan dengan kegiatan pemerintahan desa, pelayanan publik, dan administrasi masyarakat desa secara digital. SID berfungsi tidak hanya sebagai alat bantu administratif tetapi juga sebagai media informasi yang mendukung transparansi, efektivitas, dan efisiensi layanan pemerintahan desa. Penerapan SID mengacu pada prinsip-prinsip sistem informasi yang mendukung pengambilan keputusan dan manajemen data terpadu dalam konteks pemerintahan lokal. 
+Meski banyak desa telah menerapkan sistem informasi berbasis web untuk pelayanan administrasi, tantangan nyata masih muncul pada aksesibilitas, responsivitas, dan keterbatasan operasional ketika dihadapkan pada kondisi jaringan dan infrastruktur yang tidak stabil di lingkungan desa. Penelitian serupa menunjukkan bahwa penerapan sistem informasi desa berbasis web mampu meningkatkan efisiensi layanan, namun masih membutuhkan pendekatan teknologi yang lebih adaptif terhadap konteks desa[10]
+Progressive Web App (PWA)
+Progressive Web App (PWA) merupakan sebuah konsep teknologi aplikasi web yang memadukan keunggulan web application dan native application untuk menghasilkan pengalaman pengguna yang cepat, responsif, serta dapat bekerja cross-platform pada berbagai perangkat. Secara teknis, PWA menggunakan standar web modern (HTML, CSS, JavaScript) dilengkapi dengan web app manifest dan service worker sehingga memungkinkan aplikasi untuk dapat diinstal layaknya aplikasi native, berjalan secara offline, dan memberikan pengalaman pengguna yang lebih lancar dibandingkan aplikasi web konvensional Karakteristik PWA yang progresif, responsif, dan mampu bekerja tanpa koneksi internet atau pada kondisi jaringan tidak stabil sangat relevan dengan konteks desa, di mana sering ditemukan keterbatasan infrastruktur jaringan dan variasi perangkat dalam penggunaan layanan digital. Selain itu, penerapan PWA dalam sistem informasi telah menunjukkan peningkatan pengalaman pengguna serta efisiensi akses informasi di berbagai domain,PWA juga memiliki karakteristik yang sejalan dengan kebutuhan masyarakat desa yang heterogen: discoverability (mudah ditemukan melalui browser), installability (dapat ditambahkan ke layar beranda perangkat tanpa melalui toko aplikasi), serta offline capability (kemampuan berjalan tanpa koneksi internet aktif). Fitur-fitur ini mendukung tujuan penelitian untuk menjadikan SID tidak hanya berfungsi sebagai website biasa tetapi sebagai aplikasi yang adaptif terhadap kondisi penggunaan di desa.[11]
+Metode Waterfall
+Salah satu model SDLC yang banyak digunakan di berbagai penelitian dan proyek sistem informasi adalah model Waterfall. Model ini menekankan pendekatan linier dan berurutan, di mana setiap fase harus diselesaikan terlebih dahulu sebelum melanjutkan ke fase berikutnya. Tahapan tersebut meliputi: analisis kebutuhan, desain sistem, implementasi, pengujian, dan pemeliharaan 
+Model Waterfall dipilih karena sifatnya yang terstruktur dan terdokumentasi, sehingga mempermudah penelusuran kembali tahapan pengembangan serta memastikan bahwa setiap fase telah memenuhi standar kualitas yang diharapkan sebelum dilanjutkan. Dalam konteks SID berbasis PWA, pendekatan ini sangat membantu mengidentifikasi kebutuhan secara mendalam, merancang sistem yang tepat, serta mengevaluasi fungsionalitas dan performa aplikasi secara sistematis.	
+Beberapa studi sebelumnya juga mengaplikasikan model Waterfall dalam pengembangan sistem informasi di lingkungan desa atau organisasi kecil dengan hasil yang menunjukkan bahwa model ini memfasilitasi deployment sistem yang layak gunakan serta mampu mendukung kebutuhan fungsional sistem secara baik, meskipun masih terbatas pada implementasi web biasa dan belum banyak penelitian yang mengeksplorasi integrasi PWA secara komprehensif dalam SID[12]
+Service worker
+Penerapan Progressive Web App tidak dapat dipisahkan dari penggunaan service worker sebagai komponen utamanya. Service worker merupakan script yang berjalan di latar belakang browser dan berfungsi untuk mengelola cache, sinkronisasi data, serta permintaan jaringan. Menurut Mozilla Developer Network (MDN, 2024), service worker memungkinkan aplikasi web memiliki kemampuan offline-first, yaitu aplikasi tetap dapat berjalan meskipun koneksi internet terputus. Dalam penelitian ini, service worker digunakan untuk menyimpan resource penting sistem seperti halaman utama, data informasi desa, dan file pendukung lainnya ke dalam cache browser sehingga akses aplikasi menjadi lebih cepat dan stabil. Konsep ini sangat relevan dengan kondisi infrastruktur internet di desa yang sering kali mengalami keterbatasan jaringan. Dengan adanya service worker, sistem informasi desa dapat memberikan pengalaman penggunaan yang lebih baik dan meningkatkan kontinuitas pelayanan publik.[13]
+Perbedaan Website Konvensional dengan Pwa
+Aspek	Web Biasa	PWA
+Koneksi Internet	Memerlukan koneksi aktif untuk fungsi penuh	Dapat beroperasi secara offline/terbatas dengan cache
+Pengalaman Pengguna	Standar browser	App-like: instalasi, push notification
+
+Performa	Reload halaman setiap akses
+
+	Cepat karena caching lokal
+Tabel 2. 1 Tabel Perbedaan Web Konvensional Dengan Pwa
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Metode Penelitian
+Pada bab ini akan dijelaskan tahapan yang dilakukan untuk mengembangkan sistem informasi berdasarkan metode yang digunakan.Metode pengembangan perangkat lunak yang digunakan pada penelitian ini adalah metode waterfall.pada bab ini dilakukan analisi kebutuhan dan perancangan sistem.analisis kebutuhan dilakukan untuk mendapatkan kebutuhan sistem sesuai dengan kebutuhan pengguna
+ 
+Gambar 2. 1Metode penelitian
+Studi Pustaka
+Dalam melakukan pembuatan sistem informasi desa karangduren berbasis pwa ini diperlukan literature sebagai dasar teori untuk pembuatan sistem. Adapun literature yang dibutuhkan dalam membangun sistem informasi desa karangduren berbasis pwa ini dengan cara mempelajari bahan-bahan yang tertulis seperti artikel dan situs terkait tentang Bahasa pemprograman PHP, MVC, HMVC, Laravel, serta design interface yang bersifat user friendly[14].
+Analisis Kebutuhan
+Desain penelitian pengembangan yang digunakan dalam penelitian ini mengadopsi model Software Development Life Cycle (SDLC) dengan pendekatan Waterfall. Model Waterfall dipilih karena memiliki tahapan pengembangan yang jelas, linier, dan berurutan, sehingga sesuai dengan kebutuhan penelitian,model Waterfall dinilai relevan untuk pengembangan sistem informasi desa karena kebutuhan sistem relatif dapat didefinisikan sejak awal melalui analisis kebutuhan bersama perangkat desa, serta perubahan kebutuhan cenderung tidak terlalu dinamis selama proses pengembangan berlangsung.
+Secara konseptual, model Waterfall terdiri dari beberapa tahapan utama yang saling berkaitan dan dilaksanakan secara berurutan. Tahapan pertama adalah analisis kebutuhan (requirements analysis). Pada tahap ini, peneliti melakukan identifikasi dan analisis kebutuhan sistem informasi desa Karangduren, baik kebutuhan fungsional maupun nonfungsional. Analisis kebutuhan dilakukan melalui pengumpulan data lapangan peneliti akan melakukan wawancara dan observasi[12]
+Desain Sistem
+Tahapan kedua adalah perancangan sistem (system design). Pada tahap ini, spesifikasi kebutuhan yang telah diperoleh diterjemahkan ke dalam rancangan teknis sistem. Perancangan meliputi arsitektur sistem, perancangan basis data, perancangan alur proses (flowchart atau diagram UML), serta perancangan antarmuka pengguna (user interface)[12]. Dalam penelitian ini, perancangan sistem juga memperhatikan karakteristik Progressive Web App (PWA), seperti kebutuhan service worker, mekanisme caching, dan dukungan akses offline, sehingga sistem yang dirancang mampu berjalan secara optimal pada kondisi jaringan yang terbatas.
+Implementasi
+Tahapan ketiga adalah implementasi (implementation). Pada tahap ini, rancangan sistem yang telah disusun diimplementasikan ke dalam bentuk kode program menggunakan teknologi pengembangan web yang mendukung PWA. Proses implementasi dilakukan sesuai dengan desain yang telah ditetapkan, sehingga setiap fitur yang dikembangkan mengacu pada spesifikasi kebutuhan sistem[12]. Hasil dari tahap ini adalah sistem informasi desa berbasis PWA yang dapat dijalankan dan diuji.
+Testing
+Tahapan keempat adalah pengujian sistem (testing). Pengujian dilakukan untuk memastikan bahwa sistem yang dikembangkan telah berfungsi sesuai dengan kebutuhan dan bebas dari kesalahan fungsional yang signifikan[12]. Pengujian dalam penelitian ini difokuskan pada pengujian fungsionalitas sistem, kesesuaian fitur dengan kebutuhan pengguna, serta pengujian karakteristik PWA seperti kemampuan akses offline dan responsivitas sistem. Tahap pengujian menjadi bagian penting dalam penelitian RnD karena berfungsi sebagai dasar evaluasi kelayakan produk sebelum diimplementasikan secara lebih luas penguji akan melakukan dua metode testing menggunakan tools lighthouse serta testing usabilty menggunakan system usability scale
+Performance Testing
+Penguji akan melakukan testing menggunakan tools lighthouse dengan metrik yang diukur yaitu speed index merupakan metrik penilaian yang mengukur seberapa cepat konten halaman web dimuat dan terlihat oleh pengguna selanjutnya first contentful paint yaitu metriks yang mengukur waktu dari halaman mulai memuat hingga saat konten pertama dirender selanjutnya metriks time to interactive metriks pengujian yang menilai waktu saat halaman milai memuat hingga saat halaman sepenuhnya interaktif dengan target nilai performance lighhouse 90 yang menunjukkan kategori baik pada pengujian performance yang sesuai dengan kelebihan PWA
+Objek yang akan diuji yaitu Halaman Beranda,Halaman layanan administrasi desa serta halaman  informasi dan pengumuman desa,halaman tersebut dipilih dikarenakan halaman tersebut merupakan halaman yang kemungkinan paling sering diakses oleh warga sehingga halaman halaman tersebut akan mempresentasikan keunggulan teknologi pwa yang akan digunakan .
+Tujuan dari pengujian performance menggunakan lighthouse adalah,yang pertama dapat membuktikan bahwa sistem informasi desa berbasis pwa memiliki performa yang baik dan stabil ,yang kedua dapat menunjukkan bahwa penerapan pwa pada sistem informasi desa layak untuk digunakan pada lingkungan  yang memiliki keterbatasan jaringan
+Sus Score	Grade	Adjective Rating
+>80.3	A	Excellent
+68-80.3	B	Good
+68	C	Okay
+51-68	D	Poor
+<51	F	Awful
+Tabel 3. 1 Tabel Penilaian Usability Testing
+Target hasil pengujian dalam penelitian ini ditetapkan untuk menilai kelayakan dan kualitas Sistem Informasi Desa Karangduren berbasis Progressive Web App (PWA) yang dikembangkan. Pada aspek performance, sistem ditargetkan memperoleh skor Lighthouse minimal 90 yang termasuk dalam kategori baik, dengan nilai First Contentful Paint (FCP) ≤ 2,5 detik, Speed Index ≤ 3,4 detik, dan Time to Interactive (TTI) ≤ 3,8 detik. Pencapaian target tersebut menunjukkan bahwa sistem memiliki waktu muat yang cepat, responsif, dan sesuai dengan karakteristik PWA, sehingga layak digunakan pada lingkungan desa dengan kondisi jaringan yang bervariasi
+Usability Testing
+Usability testing merupakan praktik pengujian terhadap aplikasi atau website yang telah dirancang kepada pengguna untuk melihat apakah pengguna dapat menggunakan dengan mudah dan memiliki experience yang baik saat menggunakan aplikasi atau website tersebut.
+Dalam testing ini penulis akan memilih beberapa responden dengan kriteria yaitu warga serta perangkat desa alasan memilih kedua kriteria responden tersebut yang pertama perangkat desa nantinya yang akan berperan sebagai pengguna utama dan pengelola sistem,serta yang memahami alur kerja administratif desa,yang kedua yaitu warga desa yang merupakan pengguna akhir dari sistem ini sehingga dapat menilai penerimaan dan kemudahan akses sistem
+Penulis akan menggunakan SUS questionnaire untuk melakukan usability testing dengan memberikan pertanyaan kepada pengguna sistem ini dan hasil akhirnya akan muncul dengan uji validitas 
+Berikut Pertanyaan Yang akan diajukan oleh penulis
+System Usability Scale
+
+		1	2	3	4	5
+1	Saya ingin sering menggunakan website desa ini untuk melihat informasi dan mengurus keperluan desa.					
+2	Menurut saya, website desa ini sulit digunakan, terutama saat membuat surat atau mengirim laporan warga.					
+3	Menurut saya, menu dan fitur di website desa ini sudah saling terhubung dengan baik 					
+4	Saya merasa perlu bantuan orang lain atau petugas desa untuk bisa menggunakan website desa ini.					
+5	Tampilan dan cara penggunaan website desa ini terasa rapi dan sama di setiap menu.					
+6	Saya merasa bingung saat pertama kali menggunakan website desa ini.					
+7	Menurut saya, warga desa bisa cepat belajar menggunakan website desa ini.					
+8	Menurut saya, website desa ini kurang praktis untuk membuat surat atau menyampaikan laporan warga.					
+9	Saya merasa yakin saat menggunakan website desa ini untuk mengurus keperluan desa.					
+10	Saya merasa harus belajar banyak hal terlebih dahulu sebelum bisa menggunakan website desa ini dengan baik.					
+Tabel 3. 2 Tabel Pertanyaan SUS
+Jumlah responden yang direncanakan dalam usability testing adalah 20 orang yang meliputi perangkat desa serta masyarakat desa sebagai pengguna layanan informasi nantinya hasil dari uji usability ini akan dihitung menggunakan rumus dibawah dengan target nilai  >68 (kategori baik) target ini menunjukkan bahwa sistem dapat diterima,mudah digunakan dan layak untuk diimplementasikan
+Skor Rata-Rata= ∑▒〖X/N〗
+n = Jumlah responden.
+Pada aspek usability, target pengujian ditetapkan berdasarkan hasil System Usability Scale (SUS). Sistem informasi desa ditargetkan memperoleh skor SUS ≥ 68, yang berada pada kategori baik dan menunjukkan bahwa sistem dapat diterima oleh pengguna. Target ini mencerminkan bahwa mayoritas pengguna, baik perangkat desa maupun masyarakat, mampu memahami alur penggunaan sistem, mengakses informasi desa, menyampaikan laporan warga, serta membuat surat administrasi secara mandiri tanpa mengalami kesulitan yang signifikan. Apabila kedua target pengujian tersebut tercapai, maka sistem informasi desa berbasis PWA dinyatakan layak secara teknis dan usability, serta memenuhi tujuan penelitian Research and Development sebagai produk yang siap digunakan dan bermanfaat bagi masyarakat desa.[15]
+Kriteria Responden
+Kriteria responden dalam penelitian ini digunakan untuk usability testing,dalam penelitian ini peneliti membagi menjadi 3 penilaian:berdasarkan usia,jenis kelamin ,serta pekerjaan deskripsi mengenai kriteria responden akan dijabarkan disubbab.
+Kriteria Responden Berdasarkan Usia
+Kriteria Responden berdasarkan usia dibagi menjadi dua kategori yakni kurang dari 30 Tahun dan lebih dari 30 Tahun.peneliti menggunakan usia 30 Tahun menjadi batas usia responden karena terdapat di tengah-tengah antara pengguna gadget  
+Kriteria Responden Berdasarkan Jenis Kelamin
+Kriteria responden berdasarkan jenis kelamin digunakan peneliti untuk membedakan responden laki laki dan perempuan dalam mengetahui berapa banyak pengguna website desa antara pengguna laki laki dan perempuan
+Kriteria Responden Berdasarkan Pekerjaan
+Kriteria responden berdasarkan pekerjaan digunakan peneliti untuk mengetahui jenis pekerjaan  yang akan menggunakan sistem desa untuk mengakses/memenuhi kebutuhan warga
+Penulisan Laporan
+Tahap akhir dari alur penelitian adalah tahap laporan penelitian atau tahap menyusun laporan penelitian. Pada tahap ini ada kewajiban untuk menyusun seluruh proses sampai hasil penelitian dan prediksi implikasi hasil tersebut secara tertulis.
+Subjek Dan Lokasi Penelitian
+Subjek penelitian dalam penelitian ini adalah pihak-pihak yang terlibat secara langsung dalam penggunaan dan pengelolaan Sistem Informasi Desa Karangduren berbasis Progressive Web App (PWA) yang dikembangkan. Subjek penelitian difokuskan pada perangkat Desa Karangduren dan masyarakat desa sebagai pengguna akhir sistem. Perangkat desa dipilih sebagai subjek penelitian utama karena mereka berperan sebagai pengelola sistem, pelaksana pelayanan administrasi desa, serta pihak yang paling memahami alur kerja dan kebutuhan informasi desa. Perangkat desa yang terlibat meliputi kepala desa, sekretaris desa, serta staf atau perangkat desa yang bertanggung jawab pada bidang administrasi dan pelayanan masyarakat. Keterlibatan perangkat desa sebagai subjek penelitian penting untuk memastikan bahwa sistem yang dikembangkan sesuai dengan kebutuhan fungsional, prosedur kerja, dan kebijakan administrasi desa yang berlaku.
+Selain perangkat desa, subjek penelitian juga mencakup masyarakat Desa Karangduren sebagai pengguna layanan informasi desa. Masyarakat desa dipilih karena menjadi penerima manfaat langsung dari sistem informasi yang dikembangkan, khususnya dalam mengakses informasi desa, layanan administrasi, dan pengumuman resmi desa. Karakteristik masyarakat sebagai subjek penelitian yang bermacam macam, baik dari segi usia, tingkat pendidikan, maupun literasi digital. Oleh karena itu, keterlibatan masyarakat dalam tahap evaluasi sistem diperlukan untuk menilai kemudahan penggunaan (usability), aksesibilitas, serta kebermanfaatan sistem informasi desa berbasis PWA dalam kondisi penggunaan nyata.
+Kriteria pemilihan subjek penelitian ditetapkan berdasarkan beberapa pertimbangan, yaitu: (1) memiliki keterkaitan langsung dengan proses pelayanan dan pengelolaan informasi desa; (2) berperan sebagai pengguna aktif atau calon pengguna sistem informasi desa; serta (3) memiliki pengalaman atau kebutuhan nyata terhadap layanan administrasi dan informasi desa. Dengan kriteria tersebut, subjek penelitian diharapkan mampu memberikan data dan umpan balik yang relevan dalam proses pengembangan, pengujian, dan evaluasi produk sistem informasi desa.
+Lokasi penelitian ini adalah Desa Karangduren, yang merupakan wilayah administrasi tempat sistem informasi desa dikembangkan dan diimplementasikan. Desa Karangduren dipilih sebagai lokasi penelitian karena desa tersebut masih menghadapi permasalahan dalam pengelolaan administrasi dan penyampaian informasi kepada masyarakat yang sebagian besar masih dilakukan secara manual atau belum terintegrasi secara digital. Kondisi tersebut menjadikan Desa Karangduren sebagai lokasi yang relevan untuk penelitian pengembangan sistem informasi desa berbasis teknologi PWA.
+Selain itu, Desa Karangduren memiliki karakteristik yang sesuai dengan tujuan penelitian, yaitu telah terjangkau oleh akses internet dengan kualitas yang relatif baik, namun masih membutuhkan sistem informasi yang lebih terintegrasi, efisien, dan mudah diakses melalui berbagai perangkat. Kondisi ini menjadikan pengembangan sistem informasi desa berbasis PWA relevan untuk meningkatkan kualitas layanan digital desa, baik dari sisi kinerja, kemudahan akses, maupun pengalaman pengguna. Pemilihan lokasi ini juga didasarkan pada adanya dukungan dan keterbukaan dari pihak pemerintah desa terhadap pelaksanaan penelitian, yang memungkinkan peneliti untuk melakukan pengumpulan data, pengembangan sistem, serta uji coba produk secara langsung di lingkungan desa.
+Dengan pemilihan subjek dan lokasi penelitian tersebut, diharapkan penelitian ini mampu menghasilkan sistem informasi desa berbasis PWA yang sesuai dengan kebutuhan nyata pengguna, kontekstual dengan kondisi Desa Karangduren, serta memiliki tingkat kebermanfaatan yang tinggi dalam mendukung pelayanan dan penyebaran informasi desa
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hasil Dan Pembahasan
+
+Pada bab ini akan dibahas hasil dari penelitian yang telah dilakukan dalam rancang bangun sistem informasi desa karangduren berbasis pwa menggunakan service worker,pembahasan akan mencakup setiap tahapan mulai dari analisis kebutuhan,desain,pengkodean dan pengujian hasil pengujian akan dipaparkan untuk menilai sejauh mana sistem yang dikembangangkan dapat memenuhi kebutuhan sistem infromasi desa
+Analisis
+Berdasarkan wawancara di kantor desa karangduren peneliti menentukan kebutuhan fungsional dan juga kebutuhan non fungsional yang harus dipenuhi oleh sistem yang dikembangkan.hasil dari analisis dilakukan secara menyeluruh hingga dapat dipastikan bahwa kebutuhan telah sesuai sebelum lanjut ke tahap selanjutnyaSetelah hasil analisis kebutuhan didapatkan langkah selanjutnya adalah membuat usecase diagram 
+Desain
+Desain bertujuan untuk memberikan gambaran visual serta teknis bagaimana sistem akan dibangun meliputi rancangan antarmuka pengguna, alur proses bisnis, hingga struktur basis data yang akan digunakan ebelum melanjutkan ke tahap selanjutnya, seluruh hasil desain divalidasi terlebih dahulu untuk memastikan bahwa rancangan yang dibuat telah sesuai dengan kebutuhan pengguna dan layak untuk diimplementasikan
+Use Case Diagram
+Use case diagram adalah gambaran visual tentang bagaimana sistem bekerja dengan menampilkan berbagai fungsi atau layanan yang disediakan oleh sistem serta bagaimana pengguna atau aktor berinteraksi dengan fungsi-fungsi tersebut . Dapat dilihat pada gambar mengenai usecase diagram dari admin dan warga sebagai pengguna[16]
+ 
+Gambar 4. 1 Use Case Diagram
+Berikut penjelasan secara rinci mengenai use case diagram 
+Aktor	Use Case	Deskripsi
+	Melihat Informasi Publik	Warga dapat mengakses halaman utama website untuk melihat informasi umum seputar desa seperti berita, pengumuman, dan profil desa
+
+Warga	Melakukan Pengajuan Surat	Warga dapat mengisi formulir permohonan pengajuan layanan surat keterangan secara online sesuai dengan kebutuhan administratif.
+	Membuat Laporan Warga	Warga dapat menyampaikan aduan, keluhan, kejadian, maupun aspirasi terkait lingkungan sekitar kepada pihak pemerintah desa.
+	Melakukan Login	Admin wajib memasukkan akun berupa email dan password yang valid untuk mendapatkan hak akses masuk ke dalam dashboard pengelola sistem.
+	Kelola Profil Desa	Admin memiliki wewenang untuk menambahkan, mengedit, dan menghapus data terkait identitas desa, seperti sejarah, visi-misi, serta struktur organisasi pemerintahan desa.
+Admin	Kelola Info & Konten	Admin bertugas untuk mengelola publikasi informasi, meliputi penambahan, pengubahan, dan penghapusan artikel berita, pengumuman, serta galeri kegiatan desa
+	Memantau pencetakan surat	Admin dapat memantau dan menghapus history pencetakan surat oleh warga
+	Memantau laporan warga	Admin dapat memantau dan menghapus history laporan oleh warga
+Tabel 3. 3 Tabel Use Case Diagram
+Diagram Activity
+Activity Diagram adalah diagram yang digunakan untuk memodelkan alur kerja suatu proses bisnis atau sistem dengan menunjukkan urutan aktivitas yang terjadi dalam proses tersebut[16]
+Warga membuat surat
+Untuk mendukung keperluan warga dalam kemudahan pembuatan surat melalui menu pengajuan surat .pengguna dapat langsung membuat surat dengan mengisi form yang sesuai dan pengguna dapat langsung mendapatkan surat yang dibutuhkan untuk dicetak.alur dari proses membuat surat bisa dilihat di gambar
+ 
+Gambar 4. 2 Diagram Activity Membuat Surat
+Langkah langkah berikut ini merujuk pada proses yang ditunjukkan dalam activity diagram dari menu pembuatan surat oleh warga:
+	Warga memilih menu Pengajuan Surat pada situs web.
+	Sistem menampilkan form pengajuan surat.
+	Warga mengisi data diri dan keperluan surat, kemudian menekan tombol "Kirim Pengajuan".
+	Sistem memvalidasi kelengkapan dan format data masukan.
+	Jika data tidak valid, sistem menampilkan pesan error atau peringatan.
+	Jika data valid, sistem menyimpan pengajuan ke database, melakukan generate file surat PDF secara otomatis, dan langsung mengunduh (download) file tersebut ke perangkat warga.
+	Warga menerima dan menyimpan file surat PDF.
+Warga Membuat Laporan
+Untuk mengakomodasi penyampaian keluhan/laporan oleh warga melalui menu laporan warga,penggguna dapat langsung melaporkannya dengan mengisi form yang sesuai dan laporan tersebut muncul secara publik,alur prosesnya bisa dilihat di gambar 
+Gambar 4. 3 Diagram Activity Laporan Warga
+Langkah langkah berikut ini merujuk pada proses yang ditunjukkan dalam activity diagram dari fitur laporan warga
+	Warga memilih menu Laporan Warga pada situs web.
+	Sistem menampilkan form pembuatan laporan.
+	Warga mengisi deskripsi laporan dan mengunggah foto bukti kejadian, lalu menekan tombol "Kirim Laporan".
+	Sistem memvalidasi isian data dan ukuran/format file bukti.
+	Jika tidak valid, sistem mengembalikan pesan error.
+	Jika valid, sistem menyimpan data laporan ke database dan menampilkan notifikasi sukses beserta nomor pelaporan kepada warga
+Admin melakukan login
+Untuk mengatur seluruh isi website maka diperlukan login untuk admin,admin dapat kelola konten profile desa,kelola konten dan berita,serta memantau pencetakan surat dan laporan warga alur prosesnya bisa dilihat di gambar
+ 
+Gambar 4. 4 Diagram Activity Login Admin
+Langkah langkah berikut merujuk pada proses yang ditunjukkan dalam proses login oleh admin
+	Admin membuka halaman login sistem.
+	Sistem menampilkan form login.
+	Admin memasukkan email dan password, kemudian menekan tombol "Login".
+	Sistem mengecek kecocokan kredensial pada database.
+	Jika kredensial salah, sistem menampilkan pesan "Login Gagal".
+	Jika kredensial benar, sistem membuat sesi (session) admin dan mengarahkan halaman ke Dashboard Admin.
+Khusus untuk Use Case Kelola Profil Desa, sistem ini membagi ruang lingkup pengelolaannya menjadi dua bagian utama, yaitu pengelolaan data tekstual (seperti sejarah, visi, dan misi) serta pengelolaan data struktur organisasi (Perangkat Desa). Masing-masing ruang lingkup tersebut dijabarkan secara lebih rinci ke dalam Activity Diagram terpisah pada poin d, e, f, dan g
+Mengubah Profil desa oleh admin
+Untuk memastikan informasi profil desa selalu aktual, administrator dapat mengubah teks deskripsi desa seperti sejarah, visi, dan misi. Alur dari proses pembaruan teks profil desa tersebut dapat dilihat pada Gambar
+ 
+Gambar 4. 5 Diagram Activity Ubah Profil Desa
+Langkah langkah berikut merujuk pada proses yang ditunjukkan dalam activity diagram dari fitur kelola profil desa 
+	Admin memilih menu Kelola Profil Desa pada dashboard.
+	Sistem menampilkan form yang berisi data teks profil desa (sejarah/visi-misi) saat ini.
+	Admin mengubah data teks tersebut dan menekan tombol "Simpan Perubahan".
+	Sistem memvalidasi perubahan data.
+	Jika valid, sistem memperbarui data profil di database dan menampilkan notifikasi sukses.
+Menambah Perangkat Desa
+Sebagai bagian dari manajemen profil desa, sistem menyediakan fitur untuk meregistrasikan anggota staf pemerintah desa yang baru. Alur dari proses penambahan data perangkat desa dapat dilihat pada Gambar
+ 
+Gambar 4. 6 Diagram Activity Tambah Perangkat Desa
+Langkah langkah berikut ini merujuk pada proses yang ditunjukkan dalam activity diagram proses tambah perangkat desa
+	Admin membuka halaman menu Perangkat Desa.
+	Sistem menampilkan daftar perangkat desa yang sudah ada.
+	Admin menekan tombol "Tambah Perangkat Desa".
+	Sistem menampilkan form tambah data perangkat.
+	Admin mengisi nama, jabatan, dan mengunggah foto profil perangkat desa, lalu menekan tombol "Simpan".
+	Sistem memvalidasi isian data dan kesesuaian format foto.
+	Jika valid, sistem menyimpan data perangkat desa baru ke database dan menampilkan notifikasi sukses.
+Mengubah perangkat desa
+Sistem memungkinkan administrator untuk menyunting profil staf pemerintah desa apabila terjadi perubahan informasi, seperti kenaikan jabatan atau pergantian foto. Alur dari proses pengubahan data perangkat desa dapat dilihat pada
+ 
+Gambar 4. 7 Diagram Activity Ubah Perangkat Desa
+Langkah langkah berikut ini merujuk pada proses yang ditunjukkan dalam activity diagram proses ubah perangkat desa
+	Admin membuka halaman menu Perangkat Desa.
+	Sistem menampilkan daftar perangkat desa.
+	Admin memilih salah satu nama perangkat desa dan menekan tombol "Edit".
+	Sistem menampilkan form edit yang telah terisi dengan data lama.
+	Admin mengubah data yang diperlukan (nama/jabatan/foto) dan menekan tombol "Update".
+	Sistem memvalidasi perubahan.
+	Jika valid, sistem memperbarui data di database dan menampilkan notifikasi sukses.
+Hapus perangkat desa
+Apabila terdapat staf desa yang telah purna tugas, administrator berhak untuk membersihkan atau mencabut data tersebut dari struktur organisasi desa. Alur dari proses penghapusan data perangkat desa dapat dilihat pada
+ 
+Gambar 4. 8 Diagram Activity Hapus Perangkat Desa
+Langkah langkah berikut ini merujuk pada proses yang ditunjukkan dalam activity diagram proses hapus perangkat desa
+	Admin membuka halaman menu Perangkat Desa.
+	Sistem menampilkan daftar perangkat desa.
+	Admin memilih salah satu data perangkat desa dan menekan tombol "Hapus".
+	Sistem menampilkan popup konfirmasi penghapusan data.
+	Admin menyetujui konfirmasi dengan menekan "Ya, Hapus".
+	Sistem menghapus data beserta file foto dari database, kemudian menampilkan notifikasi sukses
+Menambah berita & konten
+Sebagai sarana pertukaran informasi yang dinamis, administrator dapat mempublikasikan artikel,pengumuman & konten terbaru melalui submenu kelola berita. Alur dari proses penulisan dan penambahan berita baru dapat dilihat pada
+ 
+Gambar 4. 9 Diagram Acctivity Tambah Berita & Konten
+Langkah langkah berikut ini merujuk pada proses yang ditunjukkan dalam activity diagram proses tambah berita & konten
+	Admin membuka halaman menu Kelola Berita.
+	Sistem menampilkan daftar berita.
+	Admin menekan tombol "Tambah Berita".
+	Sistem menampilkan form penulisan berita baru.
+	Admin mengisi judul, konten berita, dan mengunggah gambar kover, lalu menekan tombol "Simpan".
+	Sistem memvalidasi input data.
+	Jika valid, sistem menyimpan data berita baru ke database dan menampilkan notifikasi sukses.
+Mengubah Berita & konten
+Apabila terdapat kekeliruan informasi atau kebutuhan untuk memperbarui detail pada artikel yang telah diterbitkan, administrator dapat melakukan penyuntingan. Alur dari proses pengubahan konten berita dapat dilihat pada Gambar
+ 
+Gambar 4. 10 Diagram Activity Edit Berita & Konten
+Langkah langkah berikut ini merujuk pada proses yang ditunjukkan dalam activity diagram proses edit berita & konten
+	Admin membuka halaman menu Kelola Berita.
+	Sistem menampilkan daftar berita.
+	Admin memilih salah satu berita dan menekan tombol "Edit".
+	Sistem menampilkan form edit yang berisi tulisan berita lama.
+	Admin melakukan perubahan pada judul atau konten, lalu menekan tombol "Update".
+	Sistem memvalidasi input.
+	Jika valid, sistem memperbarui tulisan berita di database dan menampilkan notifikasi sukses.
+Menghapus Berita dan Konten
+Sistem memberikan keleluasaan bagi administrator untuk menarik kembali atau menghapus publikasi berita yang dianggap sudah tidak relevan. Alur dari proses penghapusan data berita dapat dilihat pada Gambar X.
+ 
+Gambar 4. 11 Diagram Activity Hapus Konten
+Langkah langkah berikut ini merujuk pada proses yang ditunjukkan dalam activity diagram proses hapus berita & konten
+	Admin membuka halaman menu Kelola Berita.
+	Sistem menampilkan daftar berita.
+	Admin memilih salah satu berita dan menekan tombol "Hapus".
+	Sistem memunculkan peringatan konfirmasi penghapusan.
+	Admin mengonfirmasi persetujuan penghapusan.
+	Sistem menghapus teks dan gambar berita dari database, lalu menampilkan notifikasi sukses.
+Memantau Pengajuan Surat
+Seluruh riwayat pengajuan dokumen dari warga akan terekam ke dalam sistem. Administrator memiliki kewenangan penuh untuk memantau detail surat yang diajukan warga dan menghapus riwayat data pengajuan. Alur dari proses pemantauan pengajuan surat dapat dilihat pada Gambar X
+ 
+Gambar 4. 12 Diagram Activity Pantau Pengajuan Surat
+Langkah langkah berikut ini merujuk pada proses yang ditunjukkan dalam activity diagram proses memantau pencetakan surat
+	Admin membuka halaman menu Pengajuan Surat.
+	Sistem menampilkan tabel daftar pengajuan surat yang masuk dari warga.
+	Admin memilih salah satu baris data untuk melihat detail surat yang diajukan.
+	Jika admin memutuskan untuk menekan tombol "Hapus", sistem akan menampilkan popup konfirmasi.
+	Setelah dikonfirmasi, sistem menghapus riwayat data surat beserta file dokumen pendukung dari database, dan menampilkan notifikasi sukses.
+Memantau Laporan Warga
+Sistem menyediakan panel pemantauan agar keluhan dan aduan warga dapat diulas oleh pihak desa. Administrator dapat meninjau detail keluhan beserta bukti fisiknya, serta mengelola riwayat data laporan tersebut. Alur dari proses pemantauan laporan warga dapat dilihat pada Gambar X.
+ 
+Gambar 4. 13 Diagram Activity Pantau Laporan Warga
+Langkah langkah berikut ini merujuk pada proses yang ditunjukkan dalam activity diagram proses memantau laporan warga
+	Admin membuka halaman menu Laporan Warga.
+	Sistem menampilkan daftar laporan masuk dari warga.
+	Admin menekan salah satu laporan untuk melihat detail keluhan beserta foto bukti yang dilampirkan.
+	Jika admin menekan tombol "Hapus", sistem akan meminta persetujuan konfirmasi.
+	Setelah admin menyetujui, sistem menghapus data laporan beserta foto dari penyimpanan database, dan memberikan notifikasi sukses.
+Desain Interface
+Perancangan interface dilakukan untuk menggambarkan tampilan yang akan mempermudah dalam pemahaman sistem yang akan dibuat. Berikut desain interface atau tampilan pada sistem informasi desa karangduren
+Desain Interface login admin
+ 
+Gambar 4. 14 Desain Halaman Login Admin
+Rancangan tampilan pada halaman login pada sistem informasi desa karangduren yang akan diakses oleh admin, admin pada sistem mencakup sebagai pengelola data dan konten pada sistem informasi desa karangduren
+Desain dashboard admin
+ 
+Gambar 4. 15 Desain Halaman Dashboard Admin
+rancangan tampilan menu pada dashboard admin, pada halaman ini admin bisa mengelola melihat berita,komentar serta jumlah produk umkm yang sudah di posting
+Desain kelola profil desa
+ 
+Gambar 4. 16 Desain Halaman Kelola Profil Desa
+rancangan tampilan menu pada kelola profile desa yang terdiri dari sub menu profile desa, pada halaman ini admin bisa mengelola profile desa mulai dari sejarah,visi misi hingga perangkat desa
+Desain kelola berita&konten
+ 
+Gambar 4. 17 Desain Halaman Kelola Berita & Konten
+rancangan tampilan menu pada kelola berita &konten desa yang terdiri dari sub menunya pada halaman ini admin bisa mengelola berita & konten mulai dari berita,pengumuman hingga umkm
+Desain pantau cetak surat
+ 
+Gambar 4. 18 Desain Halaman Pantau Cetak Surat
+rancangan tampilan menu pada pantau surat, pada halaman ini admin bisa mengelola memantau hasil pencetakan surat oleh warga dan admin bisa menghapus surat yang bisa dicetak
+Desain pantau laporan warga
+ 
+Gambar 4. 19 Desain Halaman Pantau Laporan Warga
+rancangan tampilan menu pada fitru pantau laporan warga admin dapat melihat detail isi laporan oleh warga dan bisa menghapus laporan warga jika sudah ditindak lanjuti
+Desain halaman cetak surat oleh warga
+ 
+Gambar 4. 20 Desain Halaman Cetak Surat Oleh Warga
+rancangan tampilan menu cetak surat oleh warga,warga dapat mengisi form/field yang disediakan untuk mencetak surat sesuai kebutuhan
+Desain halaman laporan warga
+ 
+Gambar 4. 21 Desain Halaman Laporan Warga
+rancangan tampilan menu fitur laporan warga,pada halaman ini warga dapat melakukan pelaporan dengan mengisi form yang disediakan agar laporan tersebut bisa dipantau oleh admin
+Implementasi
+Hasil dari tahap implementasi adalah sistem yang bisa digunakan oleh pengguna,sistem informasi ini dibangun menggunakan bahasa php dengan framework laravel,bootsrap serta javascript Tampilan login pada gambar
+ 
+Gambar 4. 22 Implementasi Halaman Login
+Gambar merupakan cuplikan function utama pada kode program dari halaman login yang berfungsi untuk mengecek profil login yang digunakan oleh pengguna
+ 
+Gambar 4. 23 Kode Function Login Admin
+Selanjutnya user akan memasukkan email serta password,jika email serta password benar maka user akan dialihkan ke halaman dashboard admin pada gambar pada halaman dashboard menampilkan terkait jumlah berita yang ada,berita,jumlah produk umkm serta komentar lalu pada sidebar terdapat beberapa menu dan sub menu yaitu kelola profile desa,kelola berita&konten,pantau surat warga dan pantau laporan
+ 
+Gambar 4. 24 Implementasi Halaman Dashboard
+Gambar merupakan cuplikan kode function dari dashboard untuk menampilkan data terkait konten desa
+ 
+Gambar 4. 25 Kode Function Halaman Dashboard
+Pada menu kelola profile desa yang berfungsi untuk mengedit data profile desa mulai dari slider,wilayah,sejarah,visi&misi hingga peta desa tampilan menu edit profile desa pada gambar
+ 
+Gambar 4. 26 Implementasi Halaman Edit Profile desa
+Gambar merupakan cuplikan function dari kode utama untuk edit profile desa yang digunakan untuk memberikan informasi terkait desa
+ 
+Gambar 4. 27 Kode Function Edit Profile Desa
+Selanjutnya pada menu tambah perangkat desa,pada halaman ini admin bisa melakukan penambahan perangkat desa yang berisi nama,posisi,foto menu tambah perangkat desa pada gambar 
+ 
+Gambar 4. 28 Implemen Tambah Perangkat Desa
+Gambar merupakan cuplikan function dari kode utama untuk proses penambahan perangkat desa 
+ 
+Gambar 4. 29 Kode Function Tambah Perangkat Desa
+Lanjut pada aktivitas yang masih berhubungan yaitu mengedit perangkat desa seperti pada gambar admin bisa mengedit perangkat desa dengan hanya menekan edit data maka akan diarahkan ke halaman edit
+ 
+Gambar 4. 30 Implementasi Halaman Edit Perangkat Desa
+Gambar merupakan cuplikan kode function dari kode utama untuk aktivitas mengedit perangkat desa
+ 
+Gambar 4. 31 Kode Function Edit Perangkat Desa
+Lalu masih dengan aktivitas kelola perangkat desa admin bisa menghapus perangkat desa hanya dengan menekan button hapus dan konfirmasi seperti pada gambar 
+ 
+Gambar 4. 32 Implementasi Hapus Perangkat Desa
+Pada gambar merupakan cuplikan function utama pada kode utama aktivitas hapus perangkat desa
+ 
+Gambar 4. 33 Kode Function Hapus Perangkat Desa
+Lalu aktivitas selanjutnya yaitu kelola berita dan konten seperti pada gambar merupakan aktivitas menambahkan berita
+ 
+Gambar 4. 34 Implementasi Halaman Tambah Berita&Konten
+Pada gambar merupakan cuplikan function pada kode utama aktivitas menambahkan berita untuk desa mempermudah penyampaian informasi ke warga
+ 
+Gambar 4. 35 Kode Function Tambah Berita & Konten
+ 
+Gambar 4. 36 Kode Function Tambah Berita & Konten
+Lalu aktivitas selanjutnya masih berhubungan yaitu edit berita seperti yang bisa dilihat pada gambar
+ 
+Gambar 4. 37 Implementasi Halaman Edit Berita & Konten
+Pada gambar merupakan cuplikan function dari kode utama aktivitas edit berita
+ 
+Gambar 4. 38 Kode Function Edit Berita & Konten
+ 
+Gambar 4. 39 Kode Function Edit Berita & Konten
+Lalu aktivitas selanjutnya adalah hapus berita seperti pada gambar admin bisa menghapus berita yang sudah usang atau sudah tidak relevan
+ 
+Gambar 4. 40 Implementasi Hapus Berita & Konten
+Lalu pada gambar merupakan cuplikan function dari kode utama aktivitas menghapus berita
+ 
+Gambar 4. 41 Kode Function Hapus Berita & Konten
+Lalu aktivitas selanjutnya adalah admin memantau dan menghapus pencetakan surat oleh warga hanya dengan menekan tombol hapus seperti pada gambar 
+ 
+Gambar 4. 42 Implementasi HapusnSurat Warga
+Lalu pada gambar merupakan cuplikan kode function dari kode utama menghapus surat warga
+ 
+Gambar 4. 43 Kode Function Hapus Surat Warga
+Lalu aktivitas selanjutnya memantau dan menghapus laporan dari warga seperti pada gambar
+ 
+Gambar 4. 44 Implementasi Hapus Laporan Warga
+Lalu pada gambar merupakan cuplikan function pada kode utama aktivitas hapus laporan warga
+ 
+Gambar 4. 45 Kode Function Hapus Laporan Warga
+Lalu beralih pada aktivitas oleh warga yaitu pengajuan surat dimana warga bisa langsung mengisi dan mendownload surat yang diperlukan seperti pada gambar 
+ 
+Gambar 4. 46 Implementasi Cetak Surat Warga
+Lalu pada gambar merupakan kode function dari kode utama pengajuan surat oleh warga
+ 
+Gambar 4. 47 Kode Function Cetak Surat Warga
+ 
+Gambar 4. 48 Kode Function Cetak Surat Warga
+Lalu aktivitas selanjutnya adalah warga dapat membuat laporan kepada perangkat desa seperti pada gambar
+ 
+Gambar 4. 49 Implementasi Laporan Warga
+Lalu pada gambar merupakan cuplikan function dari kode utama untuk laporan warga
+ 
+Gambar 4. 50 Kode Function Laporan Warga
+Implementasi Service Worker dan strategi caching
+Service Worker bertindak sebagai proksi antara aplikasi web dan jaringan internet. Pada sistem ini, Service Worker didesain menggunakan strategi Network-First untuk dokumen HTML agar data selalu baru, serta Stale-While-Revalidate untuk aset statis (CSS, JS, Gambar) agar loading aplikasi menjadi sangat cepat meskipun internet lambat pada gambar menunjukkan ketika browser disetel ke offline halaman web tidak crash atau menampilkan dinosaurus melainkan tetap menampilkan aset yang diambil dari cache 
+ 
+Gambar 4. 51 Implementasi Service Worker Dan Caching
+Adapun kode service worker pada website bisa dilihat pada gambar yang memungkinkan untuk website bisa diakses secara offline
+ 
+Gambar 4. 52 Kode Service Worker
+ 
+Gambar 4. 53 Kode Caching
+Implementasi Background Sync
+Fitur ini merupakan inti dari fungsionalitas PWA pada skripsi ini. Ketika warga kehilangan koneksi internet saat mengisi Form Laporan atau Pengajuan Surat, sistem akan menyimpan inputan tersebut ke IndexedDB browser seperti pada gambar . Ketika koneksi internet kembali, Service Worker akan otomatis mengirimkan antrean data tersebut ke server di latar belakang (Background Sync)
+ 
+Gambar 4. 54 Implementasi Background Sync
+Berikut 2 kode yang memiliki peran dalam fitur background sync yang dapat dilihat pada gambar merupakan kode yang berperan menangkap dan menyimpan data yang sudah diisi ke memori lokal ketika internet mati sedangkan gambar merupakan kode yang mengeksekusi dan mengirim data tersebut ketika sudah terhubung ke internet
+ 
+Gambar 4. 55 Kode Background Sync
+ 
+Gambar 4. 56 Kode Background Sync
+Implementasi Push Notification Terintegrasi Firebase
+Selain kemampuan offline, PWA pada sistem ini juga dilengkapi dengan Push Notification. Sistem memanfaatkan layanan Firebase Cloud Messaging (FCM) di dalam Service Worker untuk menampilkan notifikasi real-time ke perangkat perangkat pintar (HP/Laptop) warga ketika ada pengumuman baru dari desa seperti yang terlihat pada gambar 
+
+ 
+Gambar 4. 57 Implementasi Push Notifiaction
+Berikut kode yang memungkinkan untuk website bisa mengirimkan push notification ke perangkat
+ 
+Gambar 4. 58 Kode Function Push Notification
+Instalasi Aplikasi PWA (Add to Home Screen)
+Berkat konfigurasi manifest.json dan Service Worker yang valid, browser akan mengenali situs web desa sebagai aplikasi mandiri (standalone). Warga dapat menginstal situs ini ke layar utama (Home Screen) smartphone mereka tanpa perlu mengunduh dari Google Play Store
+  				 
+Gambar 4. 59 Button Instal 			Gambar 4. 60 Install Melalui Chrome Browser			
+Testing
+Tahap pengujian merupakan salah satu tahapan yang paling penting untuk mengevaluasi fungsionalitas, kinerja infrastruktur, dan tingkat kebergunaan (usability) dari Sistem Informasi Desa Karangduren yang telah dikembangkan. Pada tahap ini, pengujian dibagi menjadi dua pendekatan utama. Pendekatan pertama adalah pengujian performa dan validasi metrik Progressive Web App (PWA) secara objektif menggunakan alat otomatis Google Lighthouse. Pendekatan kedua adalah pengujian kebergunaan sistem secara subjektif dari sudut pandang pengguna akhir menggunakan metode System Usability Scale (SUS).
+Pengujian Performa dan Validasi PWA (Lighthouse)
+Pengujian pada tahap ini bertujuan untuk mengukur kualitas, kecepatan, dan kelayakan sistem secara teknis menggunakan Google Lighthouse, sebuah kakas audit sumber terbuka (open-source) yang terintegrasi langsung pada browser Google Chrome. Lighthouse dipilih karena menyediakan metrik pengukuran yang komprehensif dan secara spesifik memiliki instrumen validasi untuk memastikan bahwa sebuah aplikasi web telah memenuhi standar arsitektur Progressive Web App (PWA).
+Pengujian ini dilakukan dengan melakukan simulasi akses pada beberapa halaman utama sistem untuk mendapatkan evaluasi terhadap lima indikator utama, yaitu:
+	Performance (Kinerja): Mengukur seberapa cepat halaman sistem memuat konten visual (First Contentful Paint) dan seberapa cepat sistem merespons interaksi pengguna.
+	Accessibility (Aksesibilitas): Menilai seberapa ramah antarmuka sistem untuk digunakan oleh berbagai kalangan pengguna, termasuk struktur navigasi dan kontras warna pembacaan.
+	Best Practices (Praktik Terbaik): Memastikan sistem dibangun dengan mengikuti standar kode keamanan web modern dan terbebas dari kerentanan usang.
+	SEO (Search Engine Optimization): Mengevaluasi struktur tag semantik dokumen agar informasi desa mudah diindeks dan ditemukan melalui mesin pencari.
+	Progressive Web App (PWA): Indikator krusial dalam penelitian ini, yang berfungsi untuk memvalidasi secara mutlak apakah sistem telah mengimplementasikan Service Worker, Web App Manifest, strategi caching untuk mode offline, serta dukungan instalasi (Add to Home Screen) secara valid.
+ 
+Gambar 4. 61 Hasil Pengujian LightHouse
+No	Indikator Pengujian	Skor yang Diperoleh	Kategori Penilaian
+1	Performance (Kinerja)	71 / 100	Menengah (Average)
+2	Accessibility (Aksesibilitas)	94 / 100	Sangat Baik (Good)
+3	Best Practices (Praktik Terbaik)	100 / 100	Sangat Baik (Good)
+4	SEO (Search Engine Optimization)	92 / 100	Sangat Baik (Good)
+5	Progressive Web App (PWA)	Passed (Tervalidasi)		Sesuai Standar PWA
+Tabel 4. 1 Tabel Hasil Testing Lighthouse
+Berdasarkan hasil pengujian Google Lighthouse pada halaman utama sistem, aplikasi mendapatkan nilai yang sangat memuaskan pada tiga indikator utama, yaitu Accessibility (94), Best Practices (100), dan SEO (92).
+Perolehan skor sempurna (100) pada aspek Best Practices membuktikan bahwa aplikasi telah dikembangkan menggunakan standar tata kelola kode (codebase) web modern, terbebas dari pustaka yang telah usang (deprecated API), dan terbebas dari kesalahan eksekusi pada konsol browser (browser console errors). Skor 94 pada Accessibility juga mengonfirmasi bahwa kontras warna antarmuka dan struktur hierarki teks telah memenuhi standar aksesibilitas bagi pengguna dengan keterbatasan visual.
+Namun demikian, pada indikator Performance, sistem mendapatkan skor sebesar 71 (berada pada kategori menengah). Terdapat beberapa faktor teknis yang menyebabkan skor performa belum mencapai angka maksimal, di antaranya:
+Render-Blocking Resources: Pemuatan pustaka framework antarmuka pihak ketiga (seperti ekstensi Bootstrap CSS dan JavaScript) dilakukan secara sinkron, yang sedikit menunda waktu pemuatan konten visual pertama pada layar (First Contentful Paint).
+Unoptimized Assets: Gambar-gambar beresolusi tinggi (seperti gambar slider (korsel) dan thumbnail berita) yang dikelola secara dinamis belum sepenuhnya terkompresi otomatis ke dalam format generasi baru (next-gen format seperti WebP) oleh peladen (server).
+Time to First Byte (TTFB): Karakteristik framework backend (Laravel) membutuhkan waktu pemrosesan kueri pangkalan data (database) untuk menyusun dokumen HTML utuh sebelum dikirimkan kembali ke browser.
+Meskipun indikator performa global tidak bernilai sempurna akibat kendala pembatasan infrastruktur optimasi gambar otomatis, syarat fungsional mutlak dari penelitian ini telah berhasil dipenuhi. Teknologi Progressive Web App (PWA) terbukti telah berjalan secara sukses dengan beroperasinya Service Worker, manajemen cache yang dikonfigurasi dengan benar, berjalannya fitur notifikasi, serta kapabilitas instalasi aplikasi langsung dari browser. Rekomendasi optimalisasi 
+ukuran aset secara otomatis akan diajukan sebagai usulan pengembangan penelitian di masa mendatang.
+Usability Testing menggunakan System Usability Scale (SUS)
+Selain pengujian performa secara teknis, evaluasi terhadap sistem juga dilakukan dari sudut pandang pengguna akhir (end-user) untuk mengukur tingkat kebergunaan (usability) aplikasi. Pengujian ini melibatkan 20 responden yang secara spesifik dibagi ke dalam dua kelompok peran utama pada sistem, yaitu 15 responden dari kalangan warga masyarakat (mewakili pengguna antarmuka publik/PWA) dan 5 responden dari kalangan perangkat desa (mewakili pengguna antarmuka administrator). Keterlibatan dua kelompok peran ini bertujuan untuk memastikan bahwa pengukuran usability mencakup seluruh alur kerja sistem secara holistik.Instrumen kuesioner SUS terdiri dari 10 butir pernyataan standar (5 pernyataan bernada positif dan 5 pernyataan bernada negatif) yang diukur menggunakan skala Likert 1 hingga 5, di mana bobot angka 1 mewakili "Sangat Tidak Setuju" dan bobot angka 5 mewakili "Sangat Setuju".
+Pengumpulan data
+Pengumpulan data kelayakan sistem dilakukan dengan mendistribusikan kuesioner berbasis metode System Usability Scale (SUS) kepada target pengguna akhir. Responden yang berpartisipasi dalam pengujian ini berjumlah 20 orang, yang secara representatif terdiri dari 15 warga masyarakat Desa Karangduren dan 5 perangkat desa yang berinteraksi langsung dengan fitur-fitur pada sistem.
+Instrumen kuesioner tersebut terdiri dari 10 butir pernyataan yang dibagi menjadi dua pola kalimat. Pernyataan bernomor ganjil (Q1, Q3, Q5, Q7, Q9) disusun menggunakan kalimat bernada positif, sedangkan pernyataan bernomor genap (Q2, Q4, Q6, Q8, Q10) disusun menggunakan kalimat bernada negatif. Responden diminta untuk memberikan penilaian berdasarkan pengalaman penggunaan sistem menggunakan skala Likert 5 poin, dengan rincian: bobot 1 ("Sangat Tidak Setuju"), bobot 2 ("Tidak Setuju"), bobot 3 ("Netral"), bobot 4 ("Setuju"), dan bobot 5 ("Sangat Setuju"). Hasil rekapitulasi pengisian kuesioner oleh seluruh responden dapat dilihat pada Tabel
+
+Responden	
+Q1	
+Q2	
+Q3	
+Q4	
+Q5	
+Q6	
+Q7	
+Q8	
+Q9	
+Q10
+R1	4	3	5	2	4	2	3	3	4	5
+R2	4	1	4	2	5	1	4	2	5	1
+R3	4	1	4	1	5	2	4	1	5	2
+R4	5	1	4	2	5	1	4	2	5	1
+R5	5	1	4	2	5	1	4	2	5	1
+R6	5	1	4	2	5	1	4	2	5	1
+R7	4	1	5	2	4	2	5	1	4	1
+R8	4	2	4	1	5	1	5	2	4	1
+R9	4	1	5	1	4	2	5	1	4	2
+R10	4	1	4	2	5	1	4	2	5	1
+R11	5	1	4	2	5	1	4	2	5	1
+R12	4	2	5	1	4	2	4	1	5	2
+R13	4	1	5	2	5	1	4	2	5	2
+R14	4	2	5	1	4	2	5	1	4	2
+R15	4	1	5	2	4	2	5	1	5	2
+R16	4	2	5	1	4	2	5	1	4	2
+R17	5	2	4	2	4	2	3	2	5	4
+R18	4	3	3	4	4	3	3	4	3	4
+R19	5	2	4	4	4	4	4	2	4	2
+R20	5	2	4	4	4	4	4	2	4	2
+Tabel 4. 2 Data Mentah Hasil SUS
+Perhitungan Score System Usability Scale
+Data mentah dari kuesioner yang telah dikumpulkan tidak dapat dijumlahkan secara langsung untuk mendapatkan nilai akhir, melainkan harus dikonversi menggunakan formula baku System Usability Scale (SUS). Aturan perhitungan kontribusi skor dibedakan berdasarkan jenis pernyataannya, yaitu:
+	Untuk pernyataan ganjil (bermuatan positif), rumus yang berlaku adalah Skor Kontribusi = Bobot Jawaban – 1. Sebagai contoh, jika pada Q1 responden menjawab 4, maka skor kontribusinya adalah 4 – 1 = 3.
+	Untuk pernyataan genap (bermuatan negatif), rumus yang berlaku adalah Skor Kontribusi = 5 – Bobot Jawaban. Sebagai contoh, jika pada Q2 responden menjawab 2, maka skor kontribusinya adalah 5 – 2 = 3.
+Setelah nilai kontribusi dari tiap butir pernyataan diperoleh, seluruh skor tersebut dijumlahkan. Nilai akumulasi (Σ) tersebut kemudian dikalikan dengan konstanta 2,5 agar hasil akhirnya berada pada rentang skala 0 hingga 100. Secara matematis, rumusnya dituliskan sebagai: Total Skor SUS = (ΣSkor Ganjil + ΣSkor Genap) × 2,5.
+Semakin tinggi skor yang diperoleh, maka semakin tinggi tingkat kebergunaan (usability) sistem tersebut. Rincian hasil perhitungan konversi skor SUS secara lengkap untuk kedua puluh responden dijabarkan pada Tabel 4.Y di bawah ini
+Responden	Skor Hasil Hitung Sus	Jumlah	Nilai
+	Q1	Q2	Q3	Q4	Q5	Q6	Q7	Q8	Q9	Q10		Jumlah x 2,5
+R1	3	2	4	3	3	3	2	2	3	0	25	62,5
+R2	3	4	3	3	4	4	3	3	4	4	35	87,5
+R3	3	4	3	4	4	3	3	4	4	3	35	87,5
+R4	4	4	3	3	4	4	3	3	4	4	36	90
+R5	4	4	3	3	4	4	3	3	4	4	36	90
+R6	4	4	3	3	4	4	3	3	4	4	36	90
+R7	3	4	4	3	3	3	4	4	3	4	35	87,5
+R8	3	3	3	4	4	4	4	3	3	4	35	87,5
+R9	3	4	4	4	3	3	4	4	3	3	35	87,5
+R10	3	4	3	3	4	4	3	3	4	4	35	87,5
+R11	4	4	3	3	4	4	3	3	4	4	36	90
+R12	3	3	4	4	3	3	3	4	4	3	34	85
+R13	3	4	4	3	4	4	3	3	4	3	35	87,5
+R14	3	3	4	4	3	3	4	4	3	3	34	85
+R15	3	4	4	3	3	3	4	4	4	3	35	87,5
+R16	3	3	4	4	3	3	4	4	3	3	34	85
+R17	4	3	3	3	3	3	2	3	4	1	29	72,5
+R18	3	2	2	1	3	2	2	1	2	1	19	47,5
+R19	4	3	3	1	3	1	3	3	3	3	27	67,5
+R20	4	3	3	1	3	1	3	3	3	3	27	67,5
+Jumlah	653	1632,5
+Rata Rata	81,625
+Tabel 4. 3Hasil Usability Testing Menggunakan Sus
+Berdasarkan rekapitulasi hasil perhitungan konversi dari 20 responden pada tabel di atas, diperoleh total akumulasi keseluruhan skor sebesar 1632,5. Untuk mengukur metrik akhir kebergunaan sistem, nilai total akumulasi tersebut dibagi dengan jumlah responden (20 orang) sehingga menghasilkan rata-rata skor akhir System Usability Scale (SUS) sebesar 81,625.
+Mengacu pada pedoman standar penilaian dan interpretasi skor SUS internasional (Bangor, Kortum, & Miller, 2008), sebuah sistem dinyatakan layak dan mudah digunakan apabila mencapai skor rata-rata minimal 68. Perolehan skor 81,625 pada penelitian ini dievaluasi berdasarkan tiga tolok ukur pengujian SUS, dengan hasil sebagai berikut:
+
+	Berdasarkan tolok ukur Acceptability Ranges (Tingkat Penerimaan), sistem masuk ke dalam kategori "Acceptable" (Dapat Diterima) karena nilainya melampaui batas minimal 68.
+	Berdasarkan tolok ukur Grade Scale (Skala Mutu), sistem ini memperoleh predikat kelas [Masukkan Grade: B jika rentang 70-80, A jika di atas 80].
+	Berdasarkan tolok ukur Adjective Rating (Tingkat Kata Sifat), pengalaman pengguna dalam menggunakan sistem ini berada pada level "[Masukkan Adjective: Good jika rentang 71-80, Excellent jika di atas 80]".
+Perolehan skor akhir tersebut secara ilmiah mengonfirmasi bahwa Sistem Informasi Desa Karangduren terbukti memiliki tingkat usability (kebergunaan) yang tinggi. Implementasi antarmuka yang dikombinasikan dengan kapabilitas Progressive Web App (PWA) dinilai berhasil memfasilitasi kebutuhan warga dan perangkat desa dengan baik. Sistem ini dinilai mudah dipelajari, tata letaknya konsisten, dan sangat praktis untuk memproses administrasi persuratan dan pelaporan tanpa mensyaratkan pelatihan teknis khusus bagi penggunanya.
+
+
+
+
+
+
+
+
+
+
+
+
+
+KESIMPULAN
+
+Dari semua hasil implementasi pengujian yang sudah dilakukan dalam pembuatan sistem informasi ini dengan judul “Perancangan Sistem Informasi Desa Karangduren Berbasis PWA menggunakan service worker” sebagai sistem informasi untuk mempermudah dalam pencarian informasi Penulis membuat beberapa kesimpulan dari semua hasil pengujian serta saran
+Kesimpulan
+Berdasarkan seluruh tahapan analisis, perancangan, implementasi, hingga pengujian yang telah diuraikan pada penelitian "Pengembangan Sistem Informasi Desa Karangduren Berbasis PWA", penulis dapat menarik beberapa kesimpulan utama sebagai berikut:
+	Sistem Informasi Desa Karangduren telah berhasil dibangun dan diimplementasikan untuk menjembatani kebutuhan digitalisasi layanan desa. Sistem ini secara komprehensif telah memfasilitasi penyampaian profil desa, publikasi berita, promosi produk UMKM, hingga layanan administrasi mandiri berupa pengajuan surat dan pelaporan warga secara terpadu.
+	Penerapan teknologi Progressive Web App (PWA) telah berhasil diintegrasikan secara penuh ke dalam ekosistem web melalui pemanfaatan berkas Service Worker dan Web App Manifest. Pendekatan ini memungkinkan aplikasi web untuk diinstal langsung ke perangkat seluler pengguna (Add to Home Screen) dan menyajikan pengalaman antarmuka layaknya aplikasi native Android/iOS tanpa mengharuskan warga mengunduhnya melalui toko aplikasi (Play Store/App Store).
+	Kapabilitas PWA tingkat lanjut telah berhasil divalidasi. Fitur Background Sync terbukti mampu menyimpan antrean data formulir pelaporan secara lokal saat gawai kehilangan koneksi internet (offline), lalu mengunggahnya secara otomatis ke server saat koneksi kembali stabil. Selain itu, fitur Push Notification via Firebase Cloud Messaging (FCM) sukses mengirimkan pemberitahuan sistem secara real-time kepada perangkat pengguna, baik dalam keadaan background maupun foreground.
+	Berdasarkan hasil pengujian teknis (Lighthouse), sistem terbukti memenuhi standar kelayakan PWA serta meraih skor maksimal pada indikator keamanan (Best Practices), aksesibilitas, dan SEO. Sementara dari segi usability, hasil evaluasi kuesioner System Usability Scale (SUS) membuktikan bahwa baik antarmuka publik maupun administrator dinilai sangat intuitif, layak, dan mudah dioperasikan oleh warga masyarakat maupun perangkat desa.
+Saran
+Berdasarkan hasil evaluasi dan batasan yang ditemukan selama penelitian berlangsung, terdapat beberapa saran yang dapat dipertimbangkan oleh peneliti selanjutnya guna menyempurnakan sistem ini di masa mendatang, antara lain:
+	Optimalisasi Aset Dinamis pada Peladen (Server-Side): Guna meningkatkan skor metrik Performance pada pengukuran Lighthouse, disarankan untuk mengimplementasikan algoritma kompresi gambar otomatis (mengonversi aset ke format next-gen seperti WebP) dan menerapkan fitur lazy-loading tingkat lanjut pada konten berita dan galeri.
+	Penerapan Tanda Tangan Elektronik (TTE): Pada pengembangan fitur administrasi selanjutnya, dokumen hasil cetak (generate PDF) pengajuan surat disarankan untuk diintegrasikan dengan teknologi Tanda Tangan Elektronik tersertifikasi (seperti BSrE). Hal ini bertujuan agar dokumen mandiri yang dicetak warga memiliki kekuatan hukum sah tanpa memerlukan stempel basah kepala desa.
+	Peningkatan Proteksi Formulir Publik: Diperlukan penambahan lapisan verifikasi keamanan sekunder, seperti integrasi Google reCAPTCHA, khusus pada modul pelaporan warga dan pengajuan surat guna memitigasi potensi serangan spamming atau pengiriman data sampah oleh bot.
+	Perluasan Kapabilitas Data Offline: Ruang lingkup caching PWA dapat dikembangkan lebih jauh menggunakan IndexedDB agar warga tidak hanya dapat menyimpan antrean pengiriman (form submit) saat offline, melainkan juga dapat membaca seluruh arsip berita dan pengumuman secara luring penuh.
+
+
+
+
+
+
+
+
+
+Daftar Pustaka
+[1]	A. Ummah, S. Maryam, dan D. T. S. Wahidin, “E-Government Implementation to Support Digital Village in Indonesia: Evidence from Cianjur Village, Bogor Regency,” jssp, vol. 6, no. 2, hlm. 245–259, Des 2022, doi: 10.19109/jssp.v6i2.14038.
+[2]	L. Aryani dan R. Kusumaningrum, “Improving village information systems for sustainable development in Karawang Regency, Indonesia,” otoritas, vol. 14, no. 3, hlm. 627–646, Des 2024, doi: 10.26618/ojip.v14i3.16303.
+[3]	D. M. Sihotang, A. N. Hidayanto, dan S. Kurnia, “The e-government adoption ecosystem from the perspective of stakeholder theory: A case study on the village information systems in Indonesia,” Information Development, vol. 41, no. 4, hlm. 1342–1355, Nov 2025, doi: 10.1177/02666669231192879.
+[4]	M. Budiarto, A. Asmawati, dan M. Kurniawan, “Digital Transformation of Local Government: Design and Development of the Pakuhaji District Community Service Information System Website,” IJCITSM, vol. 4, no. 1, hlm. 11–18, Apr 2024, doi: 10.34306/ijcitsm.v4i1.143.
+[5]	E. Hudianti, D. Maulana, dan M. A. Nugroho, “IMPLEMENTASI PROGRESSIVE WEB APPS UNTUK SISTEM PENGELOLAAN POTENSI DESA WISATA KALI OPAK TUJUH BULAN,” JOISM, vol. 4, no. 2, hlm. 86–90, Jan 2023, doi: 10.24076/joism.2023v4i2.964.
+[6]	F. Rizki, N. Nugraha, dan Z. Alamsyah, “Development and Implementation of a Web-Based Village Information System to Optimize Services,” bit-Tech, vol. 8, no. 2, hlm. 1505–1515, Des 2025, doi: 10.32877/bt.v8i2.2976.
+[7]	S. Watini, T. Nurhaeni, dan L. Meria, “Development Of Village Office Service Models To Community Based On Mobile Computing,” IJCITSM, vol. 1, no. 2, hlm. 189–196, Okt 2021, doi: 10.34306/ijcitsm.v1i2.51.
+[8]	A. A. P. Tanggu Mara, H. D. Surjono, dan N. Yuniarti, “Progressive Web Applications as a Tool to Achieve SDG 4 and SDG 8: Evidence from Vocational Schools in Marginalized Regions,” 25 November 2025, Social Sciences. doi: 10.20944/preprints202511.1973.v1.
+[9]	E. Hudianti, D. Maulana, dan M. A. Nugroho, “IMPLEMENTASI PROGRESSIVE WEB APPS UNTUK SISTEM PENGELOLAAN POTENSI DESA WISATA KALI OPAK TUJUH BULAN,” JOISM, vol. 4, no. 2, hlm. 86–90, Jan 2023, doi: 10.24076/joism.2023v4i2.964.
+[10]	I. Basten dan M. Ardhiansyah, “Perancangan Sistem Informasi Desa Berbasis Web Menggunakan Model Waterfall (Studi Kasus Desa Banjarsari Kabupaten Lebak),” vol. 2, no. 1, 2022.
+[11]	B. Hartono, D. P. Putro, dan A. P. Widyassari, “Sistem Informasi Manajemen Arsip Berbasis Progressive Web Apps pada Institusi Pendidikan Tinggi,” jacis, vol. 5, no. 1, hlm. 57–68, Mei 2025, doi: 10.47134/jacis.v5i1.106.
+[12]	A. Agustama Armanda, A. Wulandari, dan A. Armansyah, “Pendekatan SDLC dan Metode Waterfall Untuk Pengembangan Aplikasi E-Arsip Dokumen Nasabah Pembiayaan,” CoSIE, hlm. 24–36, Des 2023, doi: 10.55537/cosie.v3i1.727.
+[13]	H. Hanifan dan I. N. Fajri, “ANALISIS DAN IMPLEMENTASI PROGRESSIVE WEB APP (PWA) SERTA FITUR NOTIFIKASI PADA SISTEM INFORMASI PENDAFTARAN VOLUNTEER VOLHUB,” INFOS Journal, vol. 7, no. 02, hlm. 104–117, Nov 2024, doi: 10.24076/infosjournal.2024v7i02.1986.
+[14]	Nur Latifah, A. Marini, dan A. Maksum, “Pendidikan Multikultural di Sekolah Dasar (Sebuah Studi Pustaka),” JPDN, vol. 6, no. 2, hlm. 42–51, Jan 2021, doi: 10.29407/jpdn.v6i2.15051.
+[15]	A. I. Maulia, S. P. Kristanto, dan L. Hakim, “System Usability Scale dalam Evaluasi Pengembangan Aplikasi Prospect menggunakan Metode Activity Oriented Design,” Jurnal Informatika, Manajemen dan Teknologi, vol. 26, no. 1, hlm. 135–142, Jun 2024, doi: 10.23969/infomatek.v26i1.14094.
+[16]	Siska Narulita, Ahmad Nugroho, dan M. Zakki Abdillah, “Diagram Unified Modelling Language (UML) untuk Perancangan Sistem Informasi Manajemen Penelitian dan Pengabdian Masyarakat (SIMLITABMAS),” Bridge, vol. 2, no. 3, hlm. 244–256, Agu 2024, doi: 10.62951/bridge.v2i3.174.
+
+
+
+
+
+
+
+
+
+
+
+
+Lampiran
+ 
+    

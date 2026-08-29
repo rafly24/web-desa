@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Berita;
 use App\Models\Gallery;
+use App\Helpers\StorageSync;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -44,11 +45,9 @@ class AdminGalleryController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            $path       = 'img-gallery/';
+            $path       = 'img-gallery';
             $file       = $request->file('gambar');
-            $extension  = $file->getClientOriginalExtension();
-            $fileName   = uniqid() . '.' . $extension;
-            $gambar     = $file->storeAs($path, $fileName, 'public');
+            $gambar     = StorageSync::storeAndSync($file, $path);
         } else {
             $gambar     = null;
         }
@@ -90,14 +89,9 @@ class AdminGalleryController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            if ($gallery->gambar) {
-                unlink('.' . Storage::url($gallery->gambar));
-            }
             $path       = 'img-gallery/';
             $file       = $request->file('gambar');
-            $extension  = $file->getClientOriginalExtension();
-            $fileName   = uniqid() . '.' . $extension;
-            $gambar     = $file->storeAs($path, $fileName, 'public');
+            $gambar     = StorageSync::updateAndSync($file, $gallery->gambar, $path);
         } else {
             $validator = Validator::make($request->all(), [
                 'gambar'       => 'mimes:png,jpg,jpeg',
@@ -127,7 +121,7 @@ class AdminGalleryController extends Controller
     public function destroy(string $id)
     {
         $gallery = Gallery::find($id);
-        unlink('.' . Storage::url($gallery->gambar));
+        StorageSync::deleteAndSync($gallery->gambar);
         $gallery->delete();
 
         return redirect()->back()->with('success', 'Berhasil menghapus data');
